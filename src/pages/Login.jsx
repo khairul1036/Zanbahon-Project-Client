@@ -1,8 +1,52 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import logo from "../assets/zanbahonlogo.png";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../provider/AuthProvider";
 
 const Login = () => {
+  const [error, setError] = useState();
+  const { userLogin, setUser } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const email = form.Email.value;
+    if (!email) {
+      setError("Please enter your email.");
+      return false;
+    }
+    const password = form.Password.value;
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters long.");
+      return false;
+    }
+    //   if (!/[A-Z]/.test(password)) {
+    //     setError("Password must contain at least one uppercase letter.");
+    //     return false;
+    //   }
+    //   if (!/[a-z]/.test(password)) {
+    //     setError("Password must contain at least one lowercase letter.");
+    //     return false;
+    //   }
+    setError("");
+
+    userLogin(email, password)
+      .then((result) => {
+        const user = result.user;
+        setUser(user);
+        navigate(location?.state ? location.state : "/");
+      })
+      .catch((err) => {
+        const errorCode = err.code;
+        const errorMessage = err.message;
+        // console.log(errorCode, errorMessage);
+        setError("Invalid Credential");
+      });
+  };
+
   return (
     <>
       <div>
@@ -20,7 +64,7 @@ const Login = () => {
             <div className="absolute -top-20 -right-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
           </div>
           <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
-            <form className="bg-white">
+            <form onSubmit={handleSubmit} className="bg-white">
               <h1 className="text-gray-800 font-bold text-2xl mb-7">Login</h1>
               <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
                 <svg
@@ -61,7 +105,7 @@ const Login = () => {
                 <input
                   className="pl-2 outline-none border-none bg-white"
                   type="text"
-                  name=""
+                  name="Password"
                   id=""
                   placeholder="Password"
                 />
@@ -72,6 +116,14 @@ const Login = () => {
               >
                 Forgot Password ?
               </a>
+
+              {/* Display the error */}
+              {error && (
+                <div className="mb-3 p-3 bg-red-100 border border-red-400 rounded-md text-red-700 text-xs">
+                  {error}
+                </div>
+              )}
+
               <button
                 type="submit"
                 className="block w-full bg-[#13B3AE] mt-4 py-2 rounded-2xl text-white font-semibold mb-2"

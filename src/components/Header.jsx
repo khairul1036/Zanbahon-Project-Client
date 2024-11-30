@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import logo from "../assets/zanbahonlogo.png";
 import { Link, NavLink } from "react-router-dom";
 import { IoHomeOutline } from "react-icons/io5";
+import { AuthContext } from "../provider/AuthProvider";
 
 const Header = () => {
+  const { user, logOut } = useContext(AuthContext);
+
   const links = (
     <>
       <li>
@@ -39,12 +42,11 @@ const Header = () => {
                   <div
                     tabindex="0"
                     role="button"
-                    className="btn btn-ghost btn-circle avatar"
-                  >
+                    className="btn btn-ghost btn-circle avatar">
                     <div className="w-10 rounded-full">
                       <img
-                        alt="Tailwind CSS Navbar component"
-                        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                        alt="user"
+                        src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
                       />
                     </div>
                   </div>
@@ -62,11 +64,10 @@ const Header = () => {
                       <a>Settings</a>
                     </li>
                     <li>
-                      <a>Logout</a>
+                      <button onClick={logOut}>Logout</button>
                     </li>
                   </ul>
                 </div>
-                <a className="btn">Login</a>
               </div>
             </div>
             <div className="">
