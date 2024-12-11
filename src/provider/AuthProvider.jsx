@@ -21,6 +21,32 @@ const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const [dbUser, setDbUser] = useState([]);
+  const fbUserEmail = user?.email;
+  //   console.log(fbUserEmail);
+
+  useEffect(() => {
+    fetch("http://localhost/zanbahon-server/user1.php")
+      .then((res) => res.json())
+      .then((data) => setDbUser(data.users))
+      .catch((err) => console.log(err));
+  }, []);
+
+  const findE = dbUser.find((email) => email.Email === fbUserEmail);
+    // console.log(findE);
+
+  let dbUserName = "";
+  let UserId = 0;
+  let dbUserEmail = "";
+  let dbUserRole = 1;
+  if (findE) {
+    dbUserName = findE.Name;
+    UserId = findE.UserId;
+    dbUserEmail = findE.Email;
+    dbUserRole = findE.RoleId;
+  }
+
+
   console.log(user);
 
   const createNewUser = (email, password) => {
@@ -31,6 +57,10 @@ const AuthProvider = ({children}) => {
   const userLogin = (email, password) => {
     // setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
+  };
+
+  const updateUserProfile = (updatedData) => {
+    return updateProfile(auth.currentUser, updatedData);
   };
 
   const logOut = () => {
@@ -45,7 +75,12 @@ const AuthProvider = ({children}) => {
     setLoading,
     createNewUser,
     userLogin,
+    updateUserProfile,
     logOut,
+    dbUserName,
+    UserId,
+    dbUserEmail,
+    dbUserRole,
   };
 
   useEffect(() => {

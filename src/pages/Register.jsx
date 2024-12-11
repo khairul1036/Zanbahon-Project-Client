@@ -56,6 +56,15 @@ const Register = () => {
         .then((result) => {
           const user = result.user;
           setUser(user);
+          updateUserProfile({ displayName: name })
+            .then(() => {
+              navigate("/");
+            })
+            .catch((error) => {
+              const errorCode = error.code;
+              const errorMessage = error.message;
+              // console.log(errorCode, errorMessage);
+            });
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -78,10 +87,9 @@ const Register = () => {
           //   setUsers(newUser)
           //   form.reset();
         });
-        navigate("/")
-    }
-    else{
-        return false;
+      navigate("/");
+    } else {
+      return false;
     }
   };
 

@@ -20,13 +20,13 @@ const Header = () => {
   );
   return (
     <>
-      <nav>
+      <nav className="z-10">
         <div className="">
           <div className="navbar bg-[#178783]">
             <div className="navbar md:flex hidden max-w-screen-xl mx-auto">
               <div className="navbar-start">
                 <div>
-                  <img src={logo} alt="Zanbahon Logo" className="w-40" />
+                  <Link to={'/'}><img src={logo} alt="Zanbahon Logo" className="w-40" /></Link>
                 </div>
               </div>
 
