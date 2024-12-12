@@ -14,6 +14,7 @@ import Vehicle from "../pages/Vehicle";
 import AllServices from "../pages/AllServices";
 import DriverRideSharePortal from "../pages/DriverRideSharePortal";
 import Payment from "../pages/Payment";
+import BookTrip from "../pages/BookTrip";
 
 const router = createBrowserRouter([
   {
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
   {
     path: "/payment",
     element: <PrivateRouter><Payment></Payment></PrivateRouter>,
+  },
+  {
+    path: "/reserve-trip",
+    element: <PrivateRouter><BookTrip></BookTrip></PrivateRouter>,
   },
 ]);
 
