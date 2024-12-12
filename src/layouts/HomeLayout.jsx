@@ -19,7 +19,7 @@ const HomeLayout = () => {
         <Header></Header>
       </header>
       <main>
-        <div className="md:hidden flex px-8 items-center bg-[#118480]">
+        {/* <div className="md:hidden flex px-8 items-center bg-[#118480]">
           <div className="flex items-center gap-3 py-5">
             <div className="avatar">
               <div className="mask h-12 w-12">
@@ -36,7 +36,7 @@ const HomeLayout = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="">
           <div className="grid md:grid-cols-6 grid-cols-3 gap-6 p-6 max-w-screen-xl mx-auto">
             <Link to={``}>
