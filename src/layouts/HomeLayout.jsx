@@ -92,16 +92,41 @@ const HomeLayout = () => {
               </>
             )}
 
-            <div className="flex flex-col items-center">
-              <div className="w-14 h-14 mb-2">
-                <img
-                  src={Parking}
-                  alt="Parking"
-                  className="object-contain w-full h-full"
-                />
-              </div>
-              <div className="text-xs font-semibold text-gray-700">Parking</div>
-            </div>
+            {dbUserRole === 1 ? (
+              <>
+                <Link to={"/parking"}>
+                  <div className="flex flex-col items-center">
+                    <div className="w-14 h-14 mb-2">
+                      <img
+                        src={Parking}
+                        alt="Parking"
+                        className="object-contain w-full h-full"
+                      />
+                    </div>
+                    <div className="text-xs font-semibold text-gray-700">
+                      Parking
+                    </div>
+                  </div>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to={"/parking-owner"}>
+                  <div className="flex flex-col items-center">
+                    <div className="w-14 h-14 mb-2">
+                      <img
+                        src={Parking}
+                        alt="Parking"
+                        className="object-contain w-full h-full"
+                      />
+                    </div>
+                    <div className="text-xs font-semibold text-gray-700">
+                      Parking
+                    </div>
+                  </div>
+                </Link>
+              </>
+            )}
 
             {dbUserRole === 1 ? (
               <>

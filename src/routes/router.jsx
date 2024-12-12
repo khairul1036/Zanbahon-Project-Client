@@ -16,6 +16,11 @@ import DriverRideSharePortal from "../pages/DriverRideSharePortal";
 import Payment from "../pages/Payment";
 import BookTrip from "../pages/BookTrip";
 import DriverBookTrip from "../pages/DriverBookTrip";
+import Parking from "../pages/Parking";
+import CreateParking from "../pages/CreateParking";
+import ParkingOwner from "../pages/ParkingOwner";
+import ViewAllParking from "../pages/ViewAllParking";
+import ParkingHistory from "../pages/ParkingHistory";
 
 const router = createBrowserRouter([
   {
@@ -84,6 +89,26 @@ const router = createBrowserRouter([
   {
     path: "/reserve-trip",
     element: <PrivateRouter><BookTrip></BookTrip></PrivateRouter>,
+  },
+  {
+    path: "/parking",
+    element: <PrivateRouter><Parking></Parking></PrivateRouter>,
+  },
+  {
+    path: "/create-parking",
+    element: <PrivateRouter><CreateParking></CreateParking></PrivateRouter>,
+  },
+  {
+    path: "/parking-owner",
+    element: <PrivateRouter><ParkingOwner></ParkingOwner></PrivateRouter>,
+  },
+  {
+    path: "/view-parking",
+    element: <PrivateRouter><ViewAllParking></ViewAllParking></PrivateRouter>,
+  },
+  {
+    path: "/history-parking",
+    element: <PrivateRouter><ParkingHistory></ParkingHistory></PrivateRouter>,
   },
 ]);
 
