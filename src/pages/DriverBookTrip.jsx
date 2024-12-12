@@ -5,18 +5,17 @@ import { IoLocationSharp } from "react-icons/io5";
 import Header from "../components/Header";
 import { AuthContext } from "../provider/AuthProvider";
 
-function DriverRideSharePortal() {
+function DriverBookTrip() {
   const [rideRequests, setRideRequests] = useState([]);
   const { UserId } = useContext(AuthContext);
 
   // get ride data
   const Requested = "Requested";
-  const ServiceName = "Ride%20Share";
+  const ServiceName = "Reservation";
   useEffect(() => {
     // Define a function to fetch ride requests
     const fetchRideRequests = () => {
       fetch(
-        // `http://localhost/zanbahon-server/Service/getByPaymentAndStatus.php?status=${Requested}`
         `http://localhost/zanbahon-server/Service/getByPaymentAndStatus.php?status=${Requested}&servicename=${ServiceName}`
       )
         .then((res) => res.json())
@@ -106,7 +105,7 @@ function DriverRideSharePortal() {
       <div className="container mx-auto p-4">
         <header className="mb-6">
           <h1 className="text-2xl font-semibold text-gray-800">
-            Driver Portal
+            Reservation Driver Portal
           </h1>
         </header>
 
@@ -219,4 +218,4 @@ function DriverRideSharePortal() {
   );
 }
 
-export default DriverRideSharePortal;
+export default DriverBookTrip;

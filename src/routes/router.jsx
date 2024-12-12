@@ -15,6 +15,7 @@ import AllServices from "../pages/AllServices";
 import DriverRideSharePortal from "../pages/DriverRideSharePortal";
 import Payment from "../pages/Payment";
 import BookTrip from "../pages/BookTrip";
+import DriverBookTrip from "../pages/DriverBookTrip";
 
 const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
   {
     path: "/driver-portal",
     element: <PrivateRouter><DriverRideSharePortal></DriverRideSharePortal></PrivateRouter>,
+  },
+  {
+    path: "/driver-reserve",
+    element: <PrivateRouter><DriverBookTrip></DriverBookTrip></PrivateRouter>,
   },
   {
     path: "/payment",

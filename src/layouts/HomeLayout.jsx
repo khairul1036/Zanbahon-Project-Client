@@ -54,20 +54,43 @@ const HomeLayout = () => {
               </div>
             </Link>
 
-            <Link to={'/reserve-trip'}>
-              <div className="flex flex-col items-center">
-                <div className="w-14 h-14 mb-2">
-                  <img
-                    src={reserve}
-                    alt="Reserve"
-                    className="object-contain w-full h-full"
-                  />
-                </div>
-                <div className="text-xs font-semibold text-gray-700">
-                  Reserve
-                </div>
-              </div>
-            </Link>
+            {dbUserRole === 1 ? (
+              <>
+                {" "}
+                <Link to={"/reserve-trip"}>
+                  <div className="flex flex-col items-center">
+                    <div className="w-14 h-14 mb-2">
+                      <img
+                        src={reserve}
+                        alt="Reserve"
+                        className="object-contain w-full h-full"
+                      />
+                    </div>
+                    <div className="text-xs font-semibold text-gray-700">
+                      Reserve
+                    </div>
+                  </div>
+                </Link>
+              </>
+            ) : (
+              <>
+                {" "}
+                <Link to={"/driver-reserve"}>
+                  <div className="flex flex-col items-center">
+                    <div className="w-14 h-14 mb-2">
+                      <img
+                        src={reserve}
+                        alt="Reserve"
+                        className="object-contain w-full h-full"
+                      />
+                    </div>
+                    <div className="text-xs font-semibold text-gray-700">
+                      Reserve
+                    </div>
+                  </div>
+                </Link>
+              </>
+            )}
 
             <div className="flex flex-col items-center">
               <div className="w-14 h-14 mb-2">
