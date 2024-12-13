@@ -63,6 +63,10 @@ const AuthProvider = ({children}) => {
     return updateProfile(auth.currentUser, updatedData);
   };
 
+  const forgotPassword = (email) => {
+    return sendPasswordResetEmail(auth, email);
+  };
+
   const logOut = () => {
     setLoading(true);
     return signOut(auth);
@@ -81,6 +85,7 @@ const AuthProvider = ({children}) => {
     UserId,
     dbUserEmail,
     dbUserRole,
+    forgotPassword,
   };
 
   useEffect(() => {

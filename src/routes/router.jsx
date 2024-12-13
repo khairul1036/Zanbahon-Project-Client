@@ -25,6 +25,7 @@ import BusTicketSeat from "../pages/BusTicketSeat";
 import BusTicketDriver from "../pages/BusTicketDriver";
 import ViewTickets from "../pages/ViewTickets";
 import BloodCenter from "../components/bloodCenter";
+import ForgotPassword from "../pages/ForgotPassword";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: "/auth/register",
         element: <Register></Register>,
+      },
+      {
+        path: "/auth/forgot-password",
+        element: <ForgotPassword></ForgotPassword>,
       },
     ],
   },

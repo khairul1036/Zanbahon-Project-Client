@@ -3,10 +3,13 @@ import logo from "../assets/zanbahonlogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { FaRegAddressCard } from "react-icons/fa";
 import { AuthContext } from "../provider/AuthProvider";
+import Lottie from "lottie-react";
+import register from "../assets/lottie/register.json";
 
 const Register = () => {
   const [error, setError] = useState();
-  const { createNewUser, setUser, updateUserProfile } = useContext(AuthContext);
+  const { createNewUser, setUser, updateUserProfile, logOut } =
+    useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -37,14 +40,14 @@ const Register = () => {
       setError("Password must be at least 6 characters long.");
       return false;
     }
-    // if (!/[A-Z]/.test(password)) {
-    //   setError("Password must contain at least one uppercase letter.");
-    //   return false;
-    // }
-    // if (!/[a-z]/.test(password)) {
-    //   setError("Password must contain at least one lowercase letter.");
-    //   return false;
-    // }
+    if (!/[A-Z]/.test(password)) {
+      setError("Password must contain at least one uppercase letter.");
+      return false;
+    }
+    if (!/[a-z]/.test(password)) {
+      setError("Password must contain at least one lowercase letter.");
+      return false;
+    }
     setError("");
 
     const newUser = { name, email, nid, phone, password, role_id };
@@ -58,7 +61,8 @@ const Register = () => {
           setUser(user);
           updateUserProfile({ displayName: name })
             .then(() => {
-              navigate("/");
+              logOut();
+              navigate("/auth/login");
             })
             .catch((error) => {
               const errorCode = error.code;
@@ -109,9 +113,14 @@ const Register = () => {
             <div className="absolute -top-40 -right-0 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
             <div className="absolute -top-20 -right-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
           </div>
+          <div className="md:hidden">
+            <Lottie animationData={register}></Lottie>
+          </div>
           <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
             <form onSubmit={handleSubmit} className="bg-white">
-              <h1 className="text-gray-800 font-bold text-2xl mb-7">Sign Up</h1>
+              <h1 className="text-gray-800 font-bold text-2xl mb-7">
+                Register
+              </h1>
               <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

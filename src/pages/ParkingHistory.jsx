@@ -3,12 +3,13 @@ import Header from "../components/Header";
 import { AuthContext } from "../provider/AuthProvider";
 import Lottie from "lottie-react";
 import ambulance from "../assets/lottie/parking.json";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ParkingHistory = () => {
   const [parkingHistory, setParkingHistory] = useState([]);
   const [loading, setLoading] = useState(true);
   const { UserId } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(
@@ -28,9 +29,14 @@ const ParkingHistory = () => {
       });
   }, [UserId]);
 
-  const handlePayment = (bookingId) => {
-    alert(`Proceeding to payment for Booking ID: ${bookingId}`);
-    // Implement payment logic here
+  const handlePayment = (bookingId, TotalAmount) => {
+    // alert(`Proceeding to payment for Booking ID: ${bookingId}`);
+    navigate("/payment", {
+      state: {
+        RideId: bookingId,
+        TotalFareAmount: TotalAmount,
+      },
+    });
   };
 
   return (
@@ -88,7 +94,12 @@ const ParkingHistory = () => {
                 {booking.PaymentStatus !== "Paid" && (
                   <button
                     className="mt-4 w-full text-[#178783] border border-solid border-[#178783] hover:bg-[#178783] hover:text-white py-2 px-4 rounded"
-                    onClick={() => handlePayment(booking.ParkingBookingId)}
+                    onClick={() =>
+                      handlePayment(
+                        booking.ParkingBookingId,
+                        booking.TotalAmount
+                      )
+                    }
                   >
                     Pay Now
                   </button>

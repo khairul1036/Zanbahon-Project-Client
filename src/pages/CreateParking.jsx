@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import { Link, useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
 import ambulance from "../assets/lottie/bus.json";
+import Swal from "sweetalert2";
 
 const CreateParking = () => {
   const navigate = useNavigate()
@@ -70,7 +71,12 @@ const CreateParking = () => {
       );
 
       const result = await response.json();
-      alert(result.message || "Parking created successfully!");
+      Swal.fire({
+        title: "Parking created successfully!",
+        text: "You clicked the button!",
+        icon: "success"
+      });
+      // alert(result.message || "Parking created successfully!");
       navigate('/view-parking')
       setFormData({
         user_id: UserId || "",

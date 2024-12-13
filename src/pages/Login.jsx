@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 import logo from "../assets/zanbahonlogo.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
+import Lottie from "lottie-react";
+import login from "../assets/lottie/login.json";
 
 const Login = () => {
   const [error, setError] = useState();
@@ -23,14 +25,14 @@ const Login = () => {
       setError("Password must be at least 6 characters long.");
       return false;
     }
-    //   if (!/[A-Z]/.test(password)) {
-    //     setError("Password must contain at least one uppercase letter.");
-    //     return false;
-    //   }
-    //   if (!/[a-z]/.test(password)) {
-    //     setError("Password must contain at least one lowercase letter.");
-    //     return false;
-    //   }
+      if (!/[A-Z]/.test(password)) {
+        setError("Password must contain at least one uppercase letter.");
+        return false;
+      }
+      if (!/[a-z]/.test(password)) {
+        setError("Password must contain at least one lowercase letter.");
+        return false;
+      }
     setError("");
 
     userLogin(email, password)
@@ -45,6 +47,11 @@ const Login = () => {
         // console.log(errorCode, errorMessage);
         setError("Invalid Credential");
       });
+  };
+
+  const handleForgotPassword = (e) => {
+    e.preventDefault();
+    navigate("/auth/forgot-password");
   };
 
   return (
@@ -62,6 +69,9 @@ const Login = () => {
             <div className="absolute -bottom-40 -left-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
             <div className="absolute -top-40 -right-0 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
             <div className="absolute -top-20 -right-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
+          </div>
+          <div className="md:hidden">
+            <Lottie animationData={login}></Lottie>
           </div>
           <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
             <form onSubmit={handleSubmit} className="bg-white">
@@ -110,12 +120,15 @@ const Login = () => {
                   placeholder="Password"
                 />
               </div>
-              <a
-                href="/forgotPassword.html"
-                className="text-sm ml-2 hover:text-[#13B3AE] cursor-pointer"
-              >
-                Forgot Password ?
-              </a>
+              {/* Forgot Password Link */}
+              <div className="text-right">
+                <button
+                  onClick={handleForgotPassword}
+                  className="text-sm hover:underline"
+                >
+                  Forgot Password?
+                </button>
+              </div>
 
               {/* Display the error */}
               {error && (
