@@ -20,10 +20,18 @@ const Header = () => {
 
   const links = (
     <>
-      <li><Link to='/'>Home</Link></li>
-      <li><Link>Services</Link></li>
-      <li><Link>History</Link></li>
-      <li><Link>Vehicle</Link></li>
+      <li>
+        <Link to="/">Home</Link>
+      </li>
+      <li>
+        <Link>Services</Link>
+      </li>
+      <li>
+        <Link>History</Link>
+      </li>
+      <li>
+        <Link>Vehicle</Link>
+      </li>
     </>
   );
   return (
@@ -34,7 +42,9 @@ const Header = () => {
             <div className="navbar md:flex hidden max-w-screen-xl mx-auto">
               <div className="navbar-start">
                 <div>
-                  <Link to="/"><img src={logo} alt="Zanbahon Logo" className="w-40" /></Link>
+                  <Link to="/">
+                    <img src={logo} alt="Zanbahon Logo" className="w-40" />
+                  </Link>
                 </div>
               </div>
 
@@ -87,16 +97,19 @@ const Header = () => {
         </div>
 
         <div className="fixed bottom-0 w-full rounded-ss-3xl rounded-se-3xl p-3 flex justify-around text-white md:hidden bg-[#178783] z-50">
-          <Link to={"/auth/login"}>
+          <Link>
             <div className="flex flex-col items-center space-y-1">
               <MdAssignmentAdd className="text-4xl" />
               <p className="text-xs">Services</p>
             </div>
           </Link>
-          <div className="flex flex-col items-center space-y-1">
+          <Link
+            to="/all-service"
+            className="flex flex-col items-center space-y-1"
+          >
             <MdHistory className="text-4xl" />
             <p className="text-xs">History</p>
-          </div>
+          </Link>
           <Link to={"/"}>
             <div className="flex flex-col items-center space-y-1">
               <IoHomeOutline className="text-4xl" />

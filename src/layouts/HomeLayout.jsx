@@ -9,6 +9,7 @@ import addCar from "../assets/addcar.png";
 import more from "../assets/application 1.png";
 import { AuthContext } from "../provider/AuthProvider";
 import { Link } from "react-router-dom";
+import logo from "../assets/transport.jpg";
 
 const HomeLayout = () => {
   const { dbUserRole } = useContext(AuthContext);
@@ -18,7 +19,29 @@ const HomeLayout = () => {
       <header>
         <Header />
       </header>
-      <main>
+      <div className="font-sans max-w-6xl max-md:max-w-md mx-auto">
+        <div className="grid md:grid-cols-2 items-center md:gap-8 gap-6">
+          <div className="max-md:order-1 max-md:text-center relative">
+            <h2 className="text-gray-800 lg:text-6xl md:text-5xl text-3xl font-extrabold mb-4 md:!leading-[56px]">
+              <span className="text-[#178783]">Smart</span> Transport with{" "}
+              <span className="text-[#178783]">Smart</span> People
+            </h2>
+            <p className="text-gray-600 mt-6 text-base leading-relaxed px-5">
+              Zanbahon is a dynamic web project for efficient event management,
+              featuring user-friendly interfaces, real-time updates, and
+              seamless functionality.
+            </p>
+          </div>
+          <div className="lg:h-[550px] md:h-[550px] flex flex-col justify-center relative max-md:before:hidden before:absolute before:h-[120%] before:w-[120%] before:right-0 before:z-0">
+            <img
+              src={logo}
+              className="rounded-md lg:w-4/5"
+              alt="Dining Experience"
+            />
+          </div>
+        </div>
+      </div>
+      <main className="mb-20">
         <section className="py-12">
           <div className="max-w-7xl mx-auto px-4 text-center">
             <div className="grid lg:grid-cols-3 grid-cols-2 gap-6">
@@ -28,7 +51,7 @@ const HomeLayout = () => {
                   <Link to={`/bus-ticket`}>
                     <div className="flex flex-col items-center p-6  rounded-lg border-gray-100 border-[2px] hover:border-[#178783] transition-all">
                       <div className="flex flex-col items-center">
-                        <div className="w-14 h-14 mb-2">
+                        <div className="w-14 h-16 mb-2">
                           <img
                             src={busTicket}
                             alt="Bus Ticket"
@@ -78,7 +101,7 @@ const HomeLayout = () => {
               </Link>
 
               {/* Parking (Role-based) */}
-              <Link to={dbUserRole === 1 ? "/parking" : "/parking-owner"}>
+              <Link to={dbUserRole === 1 ? "/parking" : "/view-parking"}>
                 <div className="flex flex-col items-center p-6  rounded-lg border-gray-100 border-[2px] hover:border-[#178783] transition-all">
                   <div className="w-14 h-14 mb-2">
                     <img

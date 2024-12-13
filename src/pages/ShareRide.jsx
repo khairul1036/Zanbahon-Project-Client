@@ -14,7 +14,7 @@ import { AuthContext } from "../provider/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
 import MapAnimation from "../assets/lottie/map.json";
-import Trip from "../assets/lottie/trip.json"
+import Trip from "../assets/lottie/trip.json";
 
 const ShareRide = () => {
   const navigate = useNavigate();
@@ -43,7 +43,8 @@ const ShareRide = () => {
 
   // fetch vehicle info
   const [vehicles, setVehicles] = useState([]);
-  const { dbUserName, UserId, dbUserEmail, dbUserRole } = useContext(AuthContext);
+  const { dbUserName, UserId, dbUserEmail, dbUserRole } =
+    useContext(AuthContext);
 
   useEffect(() => {
     if (!mapRef.current) return;
@@ -149,8 +150,6 @@ const ShareRide = () => {
     }
   }, [distanceKm, durationHours, durationMin]);
 
-
-
   // fetch vehicle info
   useEffect(() => {
     fetch("http://localhost/zanbahon-server/vehicle.php")
@@ -161,7 +160,15 @@ const ShareRide = () => {
 
   console.log(vehicles);
 
-  const handleRideSubmitData = (VehicleId, startLocation, endLocation, totalAmount, distanceKm, durationHours, durationMin) => {
+  const handleRideSubmitData = (
+    VehicleId,
+    startLocation,
+    endLocation,
+    totalAmount,
+    distanceKm,
+    durationHours,
+    durationMin
+  ) => {
     const rider_id = UserId;
     const driver_id = 0;
     const vehicle_id = VehicleId;
@@ -172,7 +179,17 @@ const ShareRide = () => {
     const total_distance = distanceKm;
     const approximate_time = `${durationHours}h ${durationMin}m`;
 
-    const requestRideShare = { rider_id, driver_id, vehicle_id, ServiceName, pickup_location, drop_location, total_fare_amount, total_distance, approximate_time }
+    const requestRideShare = {
+      rider_id,
+      driver_id,
+      vehicle_id,
+      ServiceName,
+      pickup_location,
+      drop_location,
+      total_fare_amount,
+      total_distance,
+      approximate_time,
+    };
 
     console.log(requestRideShare);
 
@@ -190,17 +207,17 @@ const ShareRide = () => {
           console.log(data.ServiceId);
           if (data.ServiceId) {
             document.getElementById("my_modal_5").close();
-            navigate('/all-service')
+            navigate("/all-service");
           }
           //    form.reset();
         });
     } else {
       return;
     }
-  }
+  };
 
   return (
-    <div>
+    <div className="mb-20">
       <header className="z-20">
         <Header />
       </header>
@@ -224,8 +241,12 @@ const ShareRide = () => {
           <div className="flex flex-col md:flex-row items-center md:items-start">
             <div className="w-full md:w-[50%] bg-white rounded-md shadow-md p-10 mb-4 md:mb-0 md:mr-4">
               <div className="flex flex-col items-center">
-                <div className="w-[220px]"><Lottie animationData={MapAnimation} loop={true} /></div>
-                <h2 className="text-xl text-center pb-5 font-bold text-[#178783] mb-2">SET WAYPOINTS</h2>
+                <div className="w-[220px]">
+                  <Lottie animationData={MapAnimation} loop={true} />
+                </div>
+                <h2 className="text-xl text-center pb-5 font-bold text-[#178783] mb-2">
+                  SET WAYPOINTS
+                </h2>
               </div>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
@@ -304,7 +325,6 @@ const ShareRide = () => {
         </div>
       </main>
 
-
       {/* Modal show available vehicle*/}
       <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
@@ -349,13 +369,13 @@ const ShareRide = () => {
                     }
                   })()}
                   <div className="space-y-1">
-                    <h3 className="text-lg font-semibold">{vehi.VehicleType}</h3>
+                    <h3 className="text-lg font-semibold">
+                      {vehi.VehicleType}
+                    </h3>
                     {/* Vehicle Details */}
                     <div className="flex items-center">
                       <GiPathDistance className="text-xl mr-2" />
-                      <p className="text-sm">
-                        {distanceKm} km
-                      </p>
+                      <p className="text-sm">{distanceKm} km</p>
                     </div>
                     <div className="flex items-center">
                       <IoTimeOutline className="text-xl mr-2" />
@@ -365,7 +385,6 @@ const ShareRide = () => {
                     </div>
                   </div>
 
-
                   {/* Button */}
                   <div className="space-y-1">
                     <div className="flex items-center font-bold">
@@ -374,7 +393,20 @@ const ShareRide = () => {
                         {parseInt(vehi.perKMRate * distanceKm)}
                       </p>
                     </div>
-                    <button onClick={() => handleRideSubmitData(vehi.VehicleId, startLocation.value, endLocation.value, vehi.perKMRate * distanceKm, distanceKm, durationHours, durationMin)} className="font-semibold border border-[#178783] text-[#178783] py-2 px-4 rounded-md hover:bg-[#178783] hover:text-white">
+                    <button
+                      onClick={() =>
+                        handleRideSubmitData(
+                          vehi.VehicleId,
+                          startLocation.value,
+                          endLocation.value,
+                          vehi.perKMRate * distanceKm,
+                          distanceKm,
+                          durationHours,
+                          durationMin
+                        )
+                      }
+                      className="font-semibold border border-[#178783] text-[#178783] py-2 px-4 rounded-md hover:bg-[#178783] hover:text-white"
+                    >
                       Select
                     </button>
                   </div>

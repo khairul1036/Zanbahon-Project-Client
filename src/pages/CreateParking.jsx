@@ -1,7 +1,9 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 import Header from "../components/Header";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Lottie from "lottie-react";
+import ambulance from "../assets/lottie/bus.json";
 
 const CreateParking = () => {
   const navigate = useNavigate()
@@ -88,10 +90,31 @@ const CreateParking = () => {
   return (
     <>
       <Header></Header>
-      <div className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg mb-20">
-        <h2 className="text-2xl font-bold mb-4">Create Parking</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
+      <div className="hero bg-gradient-to-t from-[#FFEDD2] to-[#DEFFDF] md:pt-10 pb-44">
+        <div className="hero-content flex-row-reverse">
+          <div className="w-[40%]">
+            <Lottie animationData={ambulance} />
+          </div>
+          <div className="w-[70%]">
+            <h1 className="md:text-5xl text-base font-bold text-[#178783]">
+              One Step Faster to Get Emergency Service
+            </h1>
+            <p className="md:py-6 text-[#178783] md:text-base text-xs my-3">
+              Best Services & Hospitality in every time everywhere
+            </p>
+            <Link
+              to={"/view-parking"}
+              className="btn bg-transparent rounded-lg py-2 px-5 md:text-base text-xs text-[#178783] border border-solid border-[#178783] hover:bg-[#178783] hover:text-white"
+            >
+              View Parking
+            </Link>
+          </div>
+        </div>
+      </div>
+      <div className="max-w-7xl mx-auto p-6 bg-white shadow-md rounded-lg mb-20 -mt-44">
+        <h2 className="text-2xl font-bold mb-4 text-[#178783] text-center">Create Parking</h2>
+        <form onSubmit={handleSubmit} className="space-y-4 md:grid grid-cols-2  gap-4">
+          <div className="col-span-2">
             <label className="block font-medium mb-1">User ID:</label>
             <input
               type="text"
@@ -99,19 +122,19 @@ const CreateParking = () => {
               value={dbUserName}
               onChange={handleChange}
               readOnly
-              className="w-full px-4 py-2 border rounded-md bg-gray-100 text-gray-600"
+              className=" w-full text-sm text-gray-800 bg-gray-100 focus:bg-transparent px-4 py-3.5 rounded-md outline-[#178783]"
             />
           </div>
 
-          <div>
-            <label className="block font-medium mb-1">Location:</label>
+          <div className="col-span-2">
+            <label className="block font-medium mb-4">Location:</label>
             <input
               type="text"
               name="location"
               value={formData.location}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border rounded-md"
+              className="w-full text-sm text-gray-800 bg-gray-100 focus:bg-transparent px-4 py-3.5 rounded-md outline-[#178783]"
             />
             {autocompleteResults.length > 0 && (
               <ul className="border rounded-md mt-2 bg-white shadow">
@@ -134,7 +157,7 @@ const CreateParking = () => {
               name="slot_type"
               value={formData.slot_type}
               onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md"
+              className="w-full text-sm text-gray-800 bg-gray-100 focus:bg-transparent px-4 py-3.5 rounded-md outline-[#178783]"
             >
               <option value="Regular">Regular</option>
               <option value="VIP">VIP</option>
@@ -148,7 +171,7 @@ const CreateParking = () => {
               name="total_slots"
               value={formData.total_slots}
               onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md"
+              className="w-full text-sm text-gray-800 bg-gray-100 focus:bg-transparent px-4 py-3.5 rounded-md outline-[#178783]"
             />
           </div>
 
@@ -158,7 +181,7 @@ const CreateParking = () => {
               name="vehicle_type"
               value={formData.vehicle_type}
               onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md"
+              className="w-full text-sm text-gray-800 bg-gray-100 focus:bg-transparent px-4 py-3.5 rounded-md outline-[#178783]"
             >
               <option value="Car">Car</option>
               <option value="Bike">Bike</option>
@@ -173,7 +196,7 @@ const CreateParking = () => {
               name="rate_per_hour"
               value={formData.rate_per_hour}
               onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md"
+              className="w-full text-sm text-gray-800 bg-gray-100 focus:bg-transparent px-4 py-3.5 rounded-md outline-[#178783]"
             />
           </div>
 
@@ -185,7 +208,7 @@ const CreateParking = () => {
               value={formData.overtime_rate_per_hour}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border rounded-md"
+              className="w-full text-sm text-gray-800 bg-gray-100 focus:bg-transparent px-4 py-3.5 rounded-md outline-[#178783]"
             />
           </div>
 
@@ -195,7 +218,7 @@ const CreateParking = () => {
               name="status"
               value={formData.status}
               onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-md"
+              className="w-full text-sm text-gray-800 bg-gray-100 focus:bg-transparent px-4 py-3.5 rounded-md outline-[#178783]"
             >
               <option value="Available">Available</option>
               <option value="Occupied">Occupied</option>
@@ -204,7 +227,7 @@ const CreateParking = () => {
 
           <button
             type="submit"
-            className="w-full px-4 py-2 mt-4 bg-blue-600 text-white font-bold rounded-md hover:bg-blue-700"
+            className="col-span-2 mt-4 w-full text-[#178783] border border-solid border-[#178783] hover:bg-[#178783] hover:text-white py-2 px-4 rounded"
           >
             Create Parking
           </button>

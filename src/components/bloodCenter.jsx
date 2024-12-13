@@ -222,10 +222,10 @@ const BloodCenter = () => {
         {/* Blood Center Tab */}
         {activeTab === "center" && (
           <section className="mb-20">
-            <h2 className="text-xl font-bold text-gray-700 mb-4">
+            <h2 className="text-lg font-bold text-gray-700 mb-4 m-5">
               Create Blood Donation Center
             </h2>
-            <form onSubmit={createBloodCenter} className="space-y-4">
+            <form onSubmit={createBloodCenter} className="space-y-4 m-5">
               <div>
                 <label className="block text-gray-700 font-medium">
                   Center Name
@@ -280,7 +280,7 @@ const BloodCenter = () => {
               </div>
               <button
                 type="submit"
-                className="mt-4 px-6 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                className="mt-4 w-full text-[#178783] border border-solid border-[#178783] hover:bg-[#178783] hover:text-white py-2 px-4 rounded"
                 disabled={creating}
               >
                 {creating ? "Creating..." : "Create Blood Center"}

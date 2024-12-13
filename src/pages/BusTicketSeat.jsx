@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import { AuthContext } from "../provider/AuthProvider";
 import SentNotification from "./SentNotification";
+import Lottie from "lottie-react";
+import ambulance from "../assets/lottie/bus.json";
 
 const BusTicketSeat = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);
@@ -85,11 +87,25 @@ const BusTicketSeat = () => {
   return (
     <>
       <Header />
-      <Link to={"/view-tickets"}>
-        <h1>View Tickets</h1>
-      </Link>
-      <div className="container mx-auto p-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-6">
+      {/* Hero Section */}
+      <div className="hero bg-gradient-to-t from-[#FFEDD2] to-[#DEFFDF] md:pt-10 pb-44">
+        <div className="hero-content flex-row-reverse">
+          <div className="w-1/2">
+            <Lottie animationData={ambulance} />
+          </div>
+          <div className="w-1/2">
+            <h1 className="md:text-5xl text-base font-bold text-[#178783]">
+              One Step Faster to Get Emergency Service
+            </h1>
+            <p className="md:py-6 text-[#178783] md:text-base text-xs my-3">
+              Best Services & Hospitality in every time everywhere
+            </p>
+            <Link to={"/view-tickets"} className="rounded-lg py-2 px-5 md:text-base text-xs text-[#178783] border border-solid border-[#178783] hover:bg-[#178783] hover:text-white">View Tickets</Link>
+          </div>
+        </div>
+      </div>
+      <div className="container mx-auto bg-white max-w-7xl -m-44 rounded-md md:p-10 shadow-xl mb-56">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="p-4">
             <h2 className="text-xl font-semibold mb-4">Select Your Seat</h2>
             <div className="grid grid-cols-4 gap-3">
@@ -108,24 +124,49 @@ const BusTicketSeat = () => {
               ))}
             </div>
           </div>
-          <div className="ml-6 pb-10">
+          <div className="ml-6 pb-10 md:block hidden">
             <h2 className="text-xl font-semibold mb-4">Booking Summary</h2>
             <div className="p-4">
-              <div>
+              <div className="">
                 <p>
                   Seats: <span>{selectedSeats.join(", ") || "None"}</span>
                 </p>
                 <p>
                   Total Price:{" "}
-                  <span>BDT {selectedSeats.length * seatPrice}</span>
+                  <span>{selectedSeats.length * seatPrice} ৳</span>
                 </p>
               </div>
-              <button
-                className="mt-4 w-full bg-[#178783] text-white py-2 px-4 rounded"
-                onClick={handleNext}
-              >
-                Next
-              </button>
+              <div>
+                <button
+                  className="mt-4 w-full text-[#178783] border border-solid border-[#178783] hover:bg-[#178783] hover:text-white py-2 px-4 rounded"
+                  onClick={handleNext}
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="md:hidden rounded-xl fixed bottom-3  w-screen bg-[#E5E7EB] border border-solid border-black">
+            <h2 className="text-xl font-semibold text-center text-[#178783]">
+              Booking Summary
+            </h2>
+            <div className="px-4 pb-20 flex justify-between">
+              <div className="">
+                <p>
+                  Seats: <span>{selectedSeats.join(", ") || "None"}</span>
+                </p>
+                <p>
+                  <span>৳ {selectedSeats.length * seatPrice}</span>
+                </p>
+              </div>
+              <div>
+                <button
+                  className="mt-4 w-full text-[#178783] border border-solid border-[#178783] hover:bg-[#178783] hover:text-white py-2 px-4 rounded"
+                  onClick={handleNext}
+                >
+                  Next
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -142,10 +183,11 @@ const BusTicketSeat = () => {
             <p>Seats: {selectedSeats.join(", ")}</p>
             <p>Total Amount: BDT {selectedSeats.length * seatPrice}</p>
             <button
-              className="mt-4 w-full bg-[#178783] text-white py-2 px-4 rounded"
+              className="mt-4 w-full text-[#178783] border border-solid border-[#178783] hover:bg-[#178783] hover:text-white py-2 px-4 rounded"
               onClick={handlePayNow}
             >
-              Pay Now <SentNotification serviceName='Bus Ticket'></SentNotification>
+              Pay Now{" "}
+              <SentNotification serviceName="Bus Ticket"></SentNotification>
             </button>
           </div>
         </div>

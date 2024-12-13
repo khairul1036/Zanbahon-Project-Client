@@ -1,23 +1,26 @@
-import React from 'react';
-import { FaUserCircle } from "react-icons/fa";
+import React, { useContext } from "react";
+import { FaAmbulance, FaUserCircle } from "react-icons/fa";
 import { IoMdLogOut } from "react-icons/io";
 import { FaCar } from "react-icons/fa";
-import { MdHistory } from "react-icons/md";
-import { MdAssignmentAdd } from "react-icons/md";
-
+import { AuthContext } from "../provider/AuthProvider";
+import { Link } from "react-router-dom";
+import { IoBookmarksOutline, IoTicketOutline } from "react-icons/io5";
+import { RiMotorbikeFill } from "react-icons/ri";
 
 const Sidebar = () => {
+  const { dbUserEmail, dbUserName, logOut, dbUserRole } =
+    useContext(AuthContext);
   return (
     <nav className="bg-[#178783] h-screen fixed top-0 right-0 min-w-[260px] py-6 px-4 flex flex-col overflow-auto z-40">
       {/* Profile Section */}
       <div className="flex flex-wrap flex-col justify-center items-center cursor-pointer">
-        <p className="bg-gray-300 w-12 h-12 rounded-full flex items-center justify-center font-bold text-black text-xl">
-          S
+        <p className="bg-gray-300 w-12 h-12 rounded-full flex items-center justify-center font-bold text-white text-xl">
+          <FaUserCircle className="w-28 h-28" />
         </p>
 
         <div className="text-center mt-2">
-          <p className="text-base text-white">John Doe</p>
-          <p className="text-xs text-gray-300 mt-0.5">johndoe23@gmail.com</p>
+          <p className="text-base text-white">{dbUserName}</p>
+          <p className="text-xs text-gray-300 mt-0.5">{dbUserEmail}</p>
         </div>
       </div>
 
@@ -26,49 +29,59 @@ const Sidebar = () => {
       {/* Navigation Items */}
       <ul className="space-y-3 flex-1">
         <li>
-          <a
-            href="#"
+          <Link
+            Link
+            to={dbUserRole === 1 ? "/bus-ticket" : "/bus-ticket-driver"}
             className="text-gray-300 text-sm flex items-center hover:bg-white hover:text-[#178783] rounded px-4 py-3 transition-all"
           >
-            <MdAssignmentAdd className="w-[18px] h-[18px] mr-4" />
-            <span>User Request</span>
-          </a>
+            <IoTicketOutline className="w-[18px] h-[18px] mr-4" />
+            <span>Bus Ticket</span>
+          </Link>
         </li>
         <li>
-          <a
-            href="#"
+          <Link
+            to={dbUserRole === 1 ? "/reserve-trip" : "/driver-reserve"}
             className="text-gray-300  text-sm flex items-center hover:bg-white hover:text-[#178783] rounded px-4 py-3 transition-all"
           >
-            <MdHistory className="w-[18px] h-[18px] mr-4" />
-            <span>History</span>
-          </a>
+            <IoBookmarksOutline className="w-[18px] h-[18px] mr-4" />
+            <span>Reserve</span>
+          </Link>
         </li>
         <li>
-          <a
-            href="#"
+          <Link
+            to={dbUserRole === 1 ? "/parking" : "/view-parking"}
             className="text-gray-300  text-sm flex items-center hover:bg-white hover:text-[#178783] rounded px-4 py-3 transition-all"
           >
             <FaCar className="w-[18px] h-[18px] mr-4" />
-            <span>Vehicle</span>
-          </a>
+            <span>Parking</span>
+          </Link>
         </li>
         <li>
-          <a
-            href="#"
+          <Link
+            to={dbUserRole === 1 ? "/share-ride" : "/driver-portal"}
             className="text-gray-300  text-sm flex items-center hover:bg-white hover:text-[#178783] rounded px-4 py-3 transition-all"
           >
-            <FaUserCircle className="w-[18px] h-[18px] mr-4" />
-            <span>Profile</span>
-          </a>
+            <RiMotorbikeFill className="w-[18px] h-[18px] mr-4" />
+            <span>Ride Share</span>
+          </Link>
         </li>
         <li>
-          <a
-            href="#"
+          <Link
+            to={'/emergency-services'}
+            className="text-gray-300  text-sm flex items-center hover:bg-white hover:text-[#178783] rounded px-4 py-3 transition-all"
+          >
+            <FaAmbulance className="w-[18px] h-[18px] mr-4" />
+            <span>Emergency</span>
+          </Link>
+        </li>
+        <li>
+          <div
+            onClick={logOut}
             className="text-gray-300  text-sm flex items-center hover:bg-white hover:text-[#178783] rounded px-4 py-3 transition-all"
           >
             <IoMdLogOut className="w-[18px] h-[18px] mr-4" />
             <span>Logout</span>
-          </a>
+          </div>
         </li>
       </ul>
     </nav>

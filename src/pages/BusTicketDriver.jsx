@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import { jsPDF } from "jspdf";
+import Lottie from "lottie-react";
+import ambulance from "../assets/lottie/bus.json";
+import { Link } from "react-router-dom";
 
 const BusTicketDriver = () => {
   const [busTickets, setBusTickets] = useState([]);
@@ -106,8 +109,25 @@ const BusTicketDriver = () => {
   return (
     <>
       <Header />
-      <div className="p-4">
-        <h1 className="text-2xl font-bold mb-4">Bus Tickets</h1>
+      <div className="hero bg-gradient-to-t from-[#FFEDD2] to-[#DEFFDF] md:pt-10 pb-44">
+        <div className="hero-content flex-row-reverse">
+          <div className="w-1/2">
+            <Lottie animationData={ambulance} />
+          </div>
+          <div className="w-1/2">
+            <h1 className="md:text-5xl text-base font-bold text-[#178783]">
+              One Step Faster to Get Emergency Service
+            </h1>
+            <p className="md:py-6 text-[#178783] md:text-base text-xs my-3">
+              Best Services & Hospitality in every time everywhere
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="p-4 max-w-7xl mx-auto bg-white -m-44 rounded-lg shadow mb-20">
+        <h1 className="text-2xl font-bold mb-4 text-[#178783] text-center">
+          Bus Tickets
+        </h1>
         {/* Search Field */}
         <div className="mb-4">
           <input
@@ -115,7 +135,7 @@ const BusTicketDriver = () => {
             placeholder="Search by User Name"
             value={searchTerm}
             onChange={handleSearchChange}
-            className="border p-2 rounded w-full"
+            className="w-full text-sm text-gray-800 bg-gray-100 focus:bg-transparent px-4 py-3.5 rounded-md outline-[#178783]"
           />
         </div>
         {filteredTickets.length === 0 ? (
@@ -123,13 +143,13 @@ const BusTicketDriver = () => {
         ) : (
           <>
             {" "}
-            <div className="grid grid-cols-1 gap-4">
+            <div className="md:grid grid-cols-4 gap-4">
               {filteredTickets.map((ticket) => (
                 <div
                   key={ticket.id}
-                  className="p-4 border rounded shadow-sm flex justify-between items-center"
+                  className="p-4 border rounded shadow-sm justify-between items-center"
                 >
-                  <div>
+                  <div className="text-xs">
                     <h2 className="text-lg font-semibold">
                       Booking ID: {ticket.id}
                     </h2>
@@ -149,13 +169,13 @@ const BusTicketDriver = () => {
                   </div>
                   <div>
                     <button
-                      className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+                      className="mt-4 w-full text-[#178783] border border-solid border-[#178783] hover:bg-[#178783] hover:text-white py-2 px-4 rounded"
                       onClick={() => handlePrint(ticket)}
                     >
                       Print
                     </button>
                     <button
-                      className="bg-green-500 text-white px-4 py-2 rounded"
+                      className="mt-4 w-full text-[#178783] border border-solid border-[#178783] hover:bg-[#178783] hover:text-white py-2 px-4 rounded"
                       onClick={() => handleDownload(ticket)}
                     >
                       Download PDF

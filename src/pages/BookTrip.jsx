@@ -152,19 +152,24 @@ const BookTrip = () => {
   return (
     <>
       <Header />
-      <Link to={'/all-service'}><h1>View All</h1></Link>
       <div className="hero bg-gradient-to-t from-[#FFEDD2] to-[#DEFFDF] md:pt-10 pb-44">
         <div className="hero-content flex-row-reverse">
-          <div className="w-1/2">
+          <div className="w-[30%]">
             <Lottie animationData={Trip} />
           </div>
-          <div className="w-1/2">
+          <div className="w-[70%]">
             <h1 className="md:text-5xl text-base font-bold text-[#178783]">
               One Step Faster to <br /> Book Your Trip
             </h1>
-            <p className="md:py-6 text-[#178783] md:text-base text-xs">
+            <p className="md:py-6 text-[#178783] md:text-base text-xs mb-4">
               Best Services & Hospitality in every time everywhere
             </p>
+            <Link
+              to={"/all-service"}
+              className="rounded-lg py-2 px-5 md:text-base text-xs text-[#178783] border border-solid border-[#178783] hover:bg-[#178783] hover:text-white"
+            >
+              View Trip
+            </Link>
           </div>
         </div>
       </div>

@@ -108,26 +108,26 @@ function DriverRideSharePortal() {
         {/* Conditional Rendering Based on Active Tab */}
         {activeTab === "requests" && (
           <section className="mb-8">
-            <h2 className="text-xl font-bold text-gray-700 mb-4">
+            {/* <h2 className="text-xl font-bold text-[#178783] text-center mb-4">
               New Ride Requests
-            </h2>
-            <div className="space-y-4">
+            </h2> */}
+            <div className="space-y-4 md:grid grid-cols-4 gap-4">
               {rideRequests ? (
                 rideRequests.map((ride) => (
                   <div
                     key={ride.RideId}
-                    className="bg-white shadow-md p-4 rounded-md border border-gray-200"
+                    className="bg-white shadow-md p-4 rounded-md border border-gray-200 "
                   >
                     <div className="flex justify-between items-center">
-                      <div>
-                        <h3 className="font-semibold text-lg">
+                      <div className="text-xs">
+                        <h3 className="font-semibold mb-4">
                           {ride.PickupLocation}
                         </h3>
-                        <p className="text-sm text-gray-500 flex items-center">
+                        <p className=" text-gray-500 flex items-center">
                           <IoLocationSharp className="text-gray-700 mr-2" />
                           Destination: {ride.DropLocation}
                         </p>
-                        <p className="text-sm text-gray-500">
+                        <p className=" text-gray-500">
                           Payment Status: {ride.PaymentStatus}
                         </p>
                       </div>
@@ -166,8 +166,8 @@ function DriverRideSharePortal() {
 
         {activeTab === "history" && (
           <section className="mb-20">
-            <h2 className="text-xl font-bold text-gray-700 mb-4">Ride History</h2>
-            <div className="space-y-4">
+            {/* <h2 className="text-xl font-bold text-[#178783] text-center mb-4">Ride History</h2> */}
+            <div className="space-y-4 md:grid grid-cols-4 gap-4">
               {rideHistory ? (
                 rideHistory.map((ride) => (
                   <div
@@ -175,11 +175,11 @@ function DriverRideSharePortal() {
                     className="bg-gray-100 p-4 rounded-md border border-gray-200"
                   >
                     <div className="flex justify-between items-center">
-                      <div>
-                        <h3 className="font-semibold text-lg">
+                      <div className="text-xs">
+                        <h3 className="font-semibold">
                           {ride.PickupLocation}
                         </h3>
-                        <p className="text-sm text-gray-500">
+                        <p className=" text-gray-500">
                           Destination: {ride.DropLocation}
                         </p>
                       </div>
@@ -192,10 +192,10 @@ function DriverRideSharePortal() {
                         </p>
                       </div>
                     </div>
-                    <p className="mt-2 text-sm text-gray-500">
+                    <p className="mt-2 text-xs text-gray-500">
                       Status: {ride.RideStatus}
                     </p>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-xs text-gray-500">
                       Payment Status: {ride.PaymentStatus}
                     </p>
                   </div>
