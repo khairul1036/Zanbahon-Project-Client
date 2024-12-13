@@ -22,6 +22,8 @@ import ParkingOwner from "../pages/ParkingOwner";
 import ViewAllParking from "../pages/ViewAllParking";
 import ParkingHistory from "../pages/ParkingHistory";
 import BusTicketSeat from "../pages/BusTicketSeat";
+import BusTicketDriver from "../pages/BusTicketDriver";
+import ViewTickets from "../pages/ViewTickets";
 
 const router = createBrowserRouter([
   {
@@ -114,6 +116,14 @@ const router = createBrowserRouter([
   {
     path: "/bus-ticket",
     element: <PrivateRouter><BusTicketSeat></BusTicketSeat></PrivateRouter>,
+  },
+  {
+    path: "/bus-ticket-driver",
+    element: <PrivateRouter><BusTicketDriver></BusTicketDriver></PrivateRouter>,
+  },
+  {
+    path: "/view-tickets",
+    element: <PrivateRouter><ViewTickets></ViewTickets></PrivateRouter>,
   },
 ]);
 

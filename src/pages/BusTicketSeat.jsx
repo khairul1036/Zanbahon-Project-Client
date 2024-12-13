@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import { AuthContext } from "../provider/AuthProvider";
 
@@ -84,6 +84,9 @@ const BusTicketSeat = () => {
   return (
     <>
       <Header />
+      <Link to={'/view-tickets'}>
+        <h1>View Tickets</h1>
+      </Link>
       <div className="container mx-auto p-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-6">
           <div className="p-4">

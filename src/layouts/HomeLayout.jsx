@@ -39,20 +39,41 @@ const HomeLayout = () => {
         </div> */}
         <div className="">
           <div className="grid md:grid-cols-6 grid-cols-3 gap-6 p-6 max-w-screen-xl mx-auto">
-            <Link to={`/bus-ticket`}>
-              <div className="flex flex-col items-center">
-                <div className="w-14 h-14 mb-2">
-                  <img
-                    src={busTicket}
-                    alt="Bus Ticket"
-                    className="object-contain w-full h-full"
-                  />
-                </div>
-                <div className="text-xs font-semibold text-gray-700">
-                  Bus Ticket
-                </div>
-              </div>
-            </Link>
+            {dbUserRole === 1 ? (
+              <>
+                <Link to={`/bus-ticket`}>
+                  <div className="flex flex-col items-center">
+                    <div className="w-14 h-14 mb-2">
+                      <img
+                        src={busTicket}
+                        alt="Bus Ticket"
+                        className="object-contain w-full h-full"
+                      />
+                    </div>
+                    <div className="text-xs font-semibold text-gray-700">
+                      Bus Ticket
+                    </div>
+                  </div>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to={`/bus-ticket-driver`}>
+                  <div className="flex flex-col items-center">
+                    <div className="w-14 h-14 mb-2">
+                      <img
+                        src={busTicket}
+                        alt="Bus Ticket"
+                        className="object-contain w-full h-full"
+                      />
+                    </div>
+                    <div className="text-xs font-semibold text-gray-700">
+                      Bus Ticket
+                    </div>
+                  </div>
+                </Link>
+              </>
+            )}
 
             {dbUserRole === 1 ? (
               <>
