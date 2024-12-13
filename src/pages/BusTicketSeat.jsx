@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import { AuthContext } from "../provider/AuthProvider";
+import SentNotification from "./SentNotification";
 
 const BusTicketSeat = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);
@@ -84,7 +85,7 @@ const BusTicketSeat = () => {
   return (
     <>
       <Header />
-      <Link to={'/view-tickets'}>
+      <Link to={"/view-tickets"}>
         <h1>View Tickets</h1>
       </Link>
       <div className="container mx-auto p-6">
@@ -110,13 +111,15 @@ const BusTicketSeat = () => {
           <div className="ml-6 pb-10">
             <h2 className="text-xl font-semibold mb-4">Booking Summary</h2>
             <div className="p-4">
-              <p>User Name: {dbUserName}</p>
-              <p>
-                Seats: <span>{selectedSeats.join(", ") || "None"}</span>
-              </p>
-              <p>
-                Total Price: <span>BDT {selectedSeats.length * seatPrice}</span>
-              </p>
+              <div>
+                <p>
+                  Seats: <span>{selectedSeats.join(", ") || "None"}</span>
+                </p>
+                <p>
+                  Total Price:{" "}
+                  <span>BDT {selectedSeats.length * seatPrice}</span>
+                </p>
+              </div>
               <button
                 className="mt-4 w-full bg-[#178783] text-white py-2 px-4 rounded"
                 onClick={handleNext}
@@ -142,7 +145,7 @@ const BusTicketSeat = () => {
               className="mt-4 w-full bg-[#178783] text-white py-2 px-4 rounded"
               onClick={handlePayNow}
             >
-              Pay Now
+              Pay Now <SentNotification serviceName='Bus Ticket'></SentNotification>
             </button>
           </div>
         </div>
