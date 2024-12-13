@@ -24,6 +24,7 @@ import ParkingHistory from "../pages/ParkingHistory";
 import BusTicketSeat from "../pages/BusTicketSeat";
 import BusTicketDriver from "../pages/BusTicketDriver";
 import ViewTickets from "../pages/ViewTickets";
+import BloodCenter from "../components/bloodCenter";
 
 const router = createBrowserRouter([
   {
@@ -124,6 +125,10 @@ const router = createBrowserRouter([
   {
     path: "/view-tickets",
     element: <PrivateRouter><ViewTickets></ViewTickets></PrivateRouter>,
+  },
+  {
+    path: "/bloodCenter",
+    element: <PrivateRouter><BloodCenter></BloodCenter></PrivateRouter>
   },
 ]);
 

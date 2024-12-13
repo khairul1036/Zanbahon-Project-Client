@@ -2,6 +2,9 @@ import React, { useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import { AuthContext } from "../provider/AuthProvider";
+import Lottie from "lottie-react";
+import Trip from "../assets/lottie/trip.json"
+
 
 const BookTrip = () => {
   const { UserId } = useContext(AuthContext);
@@ -136,100 +139,117 @@ const BookTrip = () => {
   };
 
   return (
-    <>
+<>
       <Header />
-      <div className="flex items-center justify-center min-h-screen p-6 bg-gray-100 mb-20">
+      <div className="hero bg-gradient-to-t from-[#FFEDD2] to-[#DEFFDF] md:pt-10 pb-44">
+        <div className="hero-content flex-row-reverse">
+          <div className="w-1/2">
+            <Lottie animationData={Trip} />
+          </div>
+          <div className="w-1/2">
+            <h1 className="md:text-5xl text-base font-bold text-[#178783]">
+              One Step Faster to <br /> Book Your Trip
+            </h1>
+            <p className="md:py-6 text-[#178783] md:text-base text-xs">
+              Best Services & Hospitality in every time everywhere
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="flex items-center justify-center p-6 mb-20 -mt-48">
         <div className="w-full bg-white rounded-xl shadow-lg p-6 max-w-7xl mx-auto">
-          <h2 className="text-4xl font-semibold text-center text-[#188784] mb-6">
-            Book Your Trip
-          </h2>
-
+          <div className="flex flex-col items-center mt-5">
+            <div className="w-[150px]"><Lottie animationData={Trip} /></div>
+            <h2 className="text-lg font-semibold text-center text-[#188784] mb-6">Book Your Trip</h2>
+          </div>
           <form onSubmit={handleSubmit}>
             {/* Pickup Location */}
             <div className="mb-4">
-              <label className="block text-sm font-medium">
-                Pickup Location
+              <label className="text-gray-800 text-[15px] mb-2 block">
+                Add Location
               </label>
-              <input
-                type="text"
-                placeholder="Type a location..."
-                value={startLocation.value}
-                onChange={(e) => {
-                  setStartLocation({ ...startLocation, value: e.target.value });
-                  fetchAutocomplete(e.target.value, "start");
-                }}
-                className="w-full border border-gray-300 rounded-md p-2"
-              />
-              {autocompleteResults.start.length > 0 && (
-                <div className="w-full bg-white border border-gray-300 rounded-md shadow-lg absolute z-10">
-                  {autocompleteResults.start.map((location, index) => (
-                    <div
-                      key={index}
-                      className="p-2 cursor-pointer hover:bg-gray-100"
-                      onClick={() =>
-                        handleAutocompleteSelect("start", location)
-                      }
-                    >
-                      {location.display_name}
+              <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Pickup Location"
+                    value={startLocation.value}
+                    onChange={(e) => {
+                      setStartLocation({ ...startLocation, value: e.target.value });
+                      fetchAutocomplete(e.target.value, "start");
+                    }}
+                    className="w-full text-sm text-gray-800 bg-gray-100 focus:bg-transparent px-4 py-3.5 rounded-md outline-[#178783]"
+                  />
+                  {autocompleteResults.start.length > 0 && (
+                    <div className="bg-white border border-gray-300 rounded-md shadow-lg absolute z-10 w-60 autocomplete-box">
+                      {autocompleteResults.start.map((location, index) => (
+                        <div
+                          key={index}
+                          className="p-2 cursor-pointer hover:bg-gray-100 autocomplete-item"
+                          onClick={() =>
+                            handleAutocompleteSelect("start", location)
+                          }
+                        >
+                          {location.display_name}
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                  )}
                 </div>
-              )}
-            </div>
-
-            {/* Destination Location */}
-            <div className="mb-4">
-              <label className="block text-sm font-medium">
-                Destination Location
-              </label>
-              <input
-                type="text"
-                placeholder="Type a location..."
-                value={endLocation.value}
-                onChange={(e) => {
-                  setEndLocation({ ...endLocation, value: e.target.value });
-                  fetchAutocomplete(e.target.value, "end");
-                }}
-                className="w-full border border-gray-300 rounded-md p-2"
-              />
-              {autocompleteResults.end.length > 0 && (
-                <div className="w-full bg-white border border-gray-300 rounded-md shadow-lg absolute z-10">
-                  {autocompleteResults.end.map((location, index) => (
-                    <div
-                      key={index}
-                      className="p-2 cursor-pointer hover:bg-gray-100"
-                      onClick={() => handleAutocompleteSelect("end", location)}
-                    >
-                      {location.display_name}
-                    </div>
-                  ))}
+                <div>
+                  {/* Destination Location */}
+                  <div className="mb-4">
+                    <input
+                      type="text"
+                      placeholder="Destination Location"
+                      value={endLocation.value}
+                      onChange={(e) => {
+                        setEndLocation({ ...endLocation, value: e.target.value });
+                        fetchAutocomplete(e.target.value, "end");
+                      }}
+                      className="w-full text-sm text-gray-800 bg-gray-100 focus:bg-transparent px-4 py-3.5 rounded-md outline-[#178783]"
+                    />
+                    {autocompleteResults.end.length > 0 && (
+                      <div className="w-full bg-white border border-gray-300 rounded-md shadow-lg absolute z-10 w-60 autocomplete-box">
+                        {autocompleteResults.end.map((location, index) => (
+                          <div
+                            key={index}
+                            className="p-2 cursor-pointer hover:bg-gray-100 autocomplete-item"
+                            onClick={() => handleAutocompleteSelect("end", location)}
+                          >
+                            {location.display_name}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
-              )}
+              </div>
             </div>
 
             {/* Additional Inputs */}
             <div className="grid md:grid-cols-2 gap-5">
               <div className="mb-4">
-                <label htmlFor="date" className="block text-sm font-medium">
+                <label htmlFor="date" className="text-gray-800 text-[15px] mb-2 block">
                   Date of Reservation:
                 </label>
                 <input
                   type="date"
                   name="date"
-                  className="w-full border border-gray-300 rounded-md p-2"
+                  className="w-full text-sm text-gray-800 bg-gray-100 focus:bg-transparent px-4 py-3.5 rounded-md outline-[#178783]"
                 />
               </div>
 
               <div className="mb-4">
                 <label
                   htmlFor="vehicleType"
-                  className="block text-sm font-medium"
+                  className="text-gray-800 text-[15px] mb-2 block"
                 >
                   Vehicle Type:
                 </label>
                 <select
                   name="vehicleType"
-                  className="w-full border border-gray-300 rounded-md p-2"
+                  className="w-full text-sm text-gray-800 bg-gray-100 focus:bg-transparent px-4 py-3.5 rounded-md outline-[#178783]"
                 >
                   <option value="1">Motorcycle</option>
                   <option value="3">Car</option>
@@ -240,14 +260,14 @@ const BookTrip = () => {
             </div>
 
             <div className="mb-4">
-              <label className="block text-sm font-medium">Trip Type:</label>
+              <label className="text-gray-800 text-[15px] mb-2 block">Trip Type:</label>
               <div className="flex items-center">
-                <label className="flex items-center mr-4">
+                <label className="flex items-center mr-3">
                   <input
                     type="radio"
                     name="tripType"
                     value="One Way"
-                    className="mr-2"
+                    className="radio radio-accent mr-3"
                   />{" "}
                   One Way
                 </label>
@@ -256,45 +276,48 @@ const BookTrip = () => {
                     type="radio"
                     name="tripType"
                     value="Round Trip"
-                    className="mr-2"
+                    className="radio radio-accent ml-10 mr-4"
                   />{" "}
                   Round Trip
                 </label>
               </div>
             </div>
 
-            <div className="mb-4">
-              <label htmlFor="pickupTime" className="block text-sm font-medium">
-                Pickup Time:
-              </label>
-              <input
-                type="time"
-                name="pickupTime"
-                className="w-full border border-gray-300 rounded-md p-2"
-              />
+            <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
+              <div className="mb-4">
+                <label htmlFor="pickupTime" className="text-gray-800 text-[15px] mb-2 block">
+                  Pickup Time:
+                </label>
+                <input
+                  type="time"
+                  name="pickupTime"
+                  className="w-full text-sm text-gray-800 bg-gray-100 focus:bg-transparent px-4 py-3.5 rounded-md outline-[#178783]"
+                />
+              </div>
+
+              <div className="mb-4">
+                <label
+                  htmlFor="paymentMethod"
+                  className="text-gray-800 text-[15px] mb-2 block"
+                >
+                  Payment Method:
+                </label>
+                <select
+                  name="paymentMethod"
+                  className="w-full text-sm text-gray-800 bg-gray-100 focus:bg-transparent px-4 py-3.5 rounded-md outline-[#178783]"
+                >
+                  <option value="Cash">Cash</option>
+                  <option value="Mobile Banking">Mobile Banking</option>
+                </select>
+              </div>
             </div>
 
-            <div className="mb-4">
-              <label
-                htmlFor="paymentMethod"
-                className="block text-sm font-medium"
-              >
-                Payment Method:
-              </label>
-              <select
-                name="paymentMethod"
-                className="w-full border border-gray-300 rounded-md p-2"
-              >
-                <option value="Cash">Cash</option>
-                <option value="Credit Card">Credit Card</option>
-                <option value="Mobile Banking">Mobile Banking</option>
-              </select>
-            </div>
+
 
             <div className="flex justify-center">
               <button
                 type="submit"
-                className="bg-[#188784] text-white px-6 py-3 rounded-lg shadow-md hover:bg-[#166c6e] transition"
+                className="w-full bg-[#188784] text-white px-6 py-3 mt-5 rounded-lg border border-solid border-[#178783] hover:bg-white hover:text-[#178783] transition "
               >
                 Calculate Trip
               </button>

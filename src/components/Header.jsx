@@ -20,7 +20,7 @@ const Header = () => {
 
   const links = (
     <>
-      <li><Link>Home</Link></li>
+      <li><Link to='/'>Home</Link></li>
       <li><Link>Services</Link></li>
       <li><Link>History</Link></li>
       <li><Link>Vehicle</Link></li>
@@ -29,12 +29,12 @@ const Header = () => {
   return (
     <>
       <nav>
-        <div className="">
+        <div className="z-50">
           <div className="navbar bg-[#178783]">
             <div className="navbar md:flex hidden max-w-screen-xl mx-auto">
               <div className="navbar-start">
                 <div>
-                  <img src={logo} alt="Zanbahon Logo" className="w-40" />
+                  <Link to="/"><img src={logo} alt="Zanbahon Logo" className="w-40" /></Link>
                 </div>
               </div>
 
@@ -61,7 +61,7 @@ const Header = () => {
                   </div>
                   <ul
                     tabIndex="0"
-                    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+                    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-20 mt-3 w-52 p-2 shadow"
                   >
                     <li>
                       <a className="justify-between">

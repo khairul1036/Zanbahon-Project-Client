@@ -9,41 +9,31 @@ function DriverRideSharePortal() {
   const [rideRequests, setRideRequests] = useState([]);
   const { UserId } = useContext(AuthContext);
 
+  const [activeTab, setActiveTab] = useState("requests"); // State for active tab
+
   // get ride data
   const Requested = "Requested";
   const ServiceName = "Ride%20Share";
   useEffect(() => {
-    // Define a function to fetch ride requests
     const fetchRideRequests = () => {
       fetch(
-        // `http://localhost/zanbahon-server/Service/getByPaymentAndStatus.php?status=${Requested}`
         `http://localhost/zanbahon-server/Service/getByPaymentAndStatus.php?status=${Requested}&servicename=${ServiceName}`
       )
         .then((res) => res.json())
         .then((data) => {
-          //   console.log(data);
           setRideRequests(data.data);
         })
         .catch((err) => console.log(err));
     };
 
-    // Fetch ride requests immediately
-    console.log(rideRequests);
     fetchRideRequests();
-
-    // Set up an interval to refetch every 2 seconds
     const intervalId = setInterval(fetchRideRequests, 2000);
-
-    // Clean up the interval on component unmount
     return () => clearInterval(intervalId);
   }, []);
 
   const [rideHistory, setRideHistory] = useState([]);
-
-  // get ride data
   const Accepted = "Accepted";
   useEffect(() => {
-    // Define a function to fetch ride history
     const fetchRideHistory = () => {
       fetch(
         `http://localhost/zanbahon-server/Service/getByPaymentAndStatus.php?status=${Accepted}&servicename=${ServiceName}`
@@ -53,13 +43,8 @@ function DriverRideSharePortal() {
         .catch((err) => console.log(err));
     };
 
-    // Fetch ride history immediately
     fetchRideHistory();
-
-    // Set up an interval to refetch every 2 seconds
     const intervalId = setInterval(fetchRideHistory, 2000);
-
-    // Clean up the interval on component unmount
     return () => clearInterval(intervalId);
   }, []);
 
@@ -68,9 +53,7 @@ function DriverRideSharePortal() {
     const ride_status = "Accepted";
 
     const acceptRideShare = { ride_id, ride_status, UserId };
-    // console.log(acceptRideShare);
     if (acceptRideShare) {
-      // update details in database
       fetch("http://localhost/zanbahon-server/Service/updateStatus.php", {
         method: "POST",
         headers: {
@@ -80,23 +63,17 @@ function DriverRideSharePortal() {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           if (data.ServiceId) {
             alert("Accept Ride");
           }
-          //    form.reset();
         });
-    } else {
-      return;
     }
   };
 
   const handleReject = (rideId) => {
-    // Update state to handle ride rejection
     alert(`Rejected ride ID: ${rideId}`);
     setRideRequests((prev) => prev.filter((ride) => ride.id !== rideId));
   };
-  //   console.log(rideRequests);
 
   return (
     <>
@@ -105,20 +82,38 @@ function DriverRideSharePortal() {
       </div>
       <div className="container mx-auto p-4">
         <header className="mb-6">
-          <h1 className="text-2xl font-semibold text-gray-800">
+          <h1 className="text-2xl font-semibold text-[#178783] text-center">
             Driver Portal
           </h1>
         </header>
 
-        {/* Ride Requests */}
-        <section className="mb-8">
-          <h2 className="text-xl font-bold text-gray-700 mb-4">
-            New Ride Requests
-          </h2>
-          <div className="space-y-4">
-            {rideRequests ? (
-              <>
-                {rideRequests.map((ride) => (
+        {/* Tabs */}
+        <div role="tablist" className="tabs tabs-lifted tabs-lg mb-8">
+          <a
+            role="tab"
+            className={`tab ${activeTab === "requests" ? "tab-active" : ""}`}
+            onClick={() => setActiveTab("requests")}
+          >
+            Ride Requests
+          </a>
+          <a
+            role="tab"
+            className={`tab ${activeTab === "history" ? "tab-active" : ""}`}
+            onClick={() => setActiveTab("history")}
+          >
+            Ride History
+          </a>
+        </div>
+
+        {/* Conditional Rendering Based on Active Tab */}
+        {activeTab === "requests" && (
+          <section className="mb-8">
+            <h2 className="text-xl font-bold text-gray-700 mb-4">
+              New Ride Requests
+            </h2>
+            <div className="space-y-4">
+              {rideRequests ? (
+                rideRequests.map((ride) => (
                   <div
                     key={ride.RideId}
                     className="bg-white shadow-md p-4 rounded-md border border-gray-200"
@@ -139,8 +134,7 @@ function DriverRideSharePortal() {
 
                       <div className="text-right">
                         <p className="font-semibold flex items-center text-green-600">
-                          <TbCurrencyTaka className="mr-1" />{" "}
-                          {ride.TotalFareAmount}
+                          <TbCurrencyTaka className="mr-1" /> {ride.TotalFareAmount}
                         </p>
                         <p className="text-sm text-gray-500">
                           Distance: {ride.TotalDistance} km
@@ -162,21 +156,20 @@ function DriverRideSharePortal() {
                       </button>
                     </div>
                   </div>
-                ))}
-              </>
-            ) : (
-              <p>Not Found</p>
-            )}
-          </div>
-        </section>
+                ))
+              ) : (
+                <p>Not Found</p>
+              )}
+            </div>
+          </section>
+        )}
 
-        {/* Ride History */}
-        <section className="mb-20">
-          <h2 className="text-xl font-bold text-gray-700 mb-4">Ride History</h2>
-          <div className="space-y-4">
-            {rideHistory ? (
-              <>
-                {rideHistory.map((ride) => (
+        {activeTab === "history" && (
+          <section className="mb-20">
+            <h2 className="text-xl font-bold text-gray-700 mb-4">Ride History</h2>
+            <div className="space-y-4">
+              {rideHistory ? (
+                rideHistory.map((ride) => (
                   <div
                     key={ride.RideId}
                     className="bg-gray-100 p-4 rounded-md border border-gray-200"
@@ -192,8 +185,7 @@ function DriverRideSharePortal() {
                       </div>
                       <div className="text-right">
                         <p className="font-semibold flex items-center text-green-600">
-                          <TbCurrencyTaka className="mr-1" />{" "}
-                          {ride.TotalFareAmount}
+                          <TbCurrencyTaka className="mr-1" /> {ride.TotalFareAmount}
                         </p>
                         <p className="text-sm text-gray-500">
                           Distance: {ride.TotalDistance} km
@@ -207,13 +199,13 @@ function DriverRideSharePortal() {
                       Payment Status: {ride.PaymentStatus}
                     </p>
                   </div>
-                ))}
-              </>
-            ) : (
-              <p>not found</p>
-            )}
-          </div>
-        </section>
+                ))
+              ) : (
+                <p>Not Found</p>
+              )}
+            </div>
+          </section>
+        )}
       </div>
     </>
   );

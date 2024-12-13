@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import Header from "../components/Header";
 import { AuthContext } from "../provider/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import { MdCheck } from "react-icons/md";
+
 
 const AllServices = () => {
   const { UserId } = useContext(AuthContext);
@@ -29,12 +31,12 @@ const AllServices = () => {
   };
   console.log(serviceRequests);
   return (
-    <>
+<>
       <div>
         <Header></Header>
       </div>
       <div className="container mx-auto p-4">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6">
+        <h1 className="text-3xl font-bold text-[#188784] mb-6 text-center my-10">
           Service Requests
         </h1>
         {serviceRequests.length === 0 ? (
@@ -42,54 +44,59 @@ const AllServices = () => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {serviceRequests.map((service) => (
+
               <div
                 key={service.RideId}
-                className="relative bg-white shadow-lg rounded-lg p-6 border border-gray-200 hover:shadow-2xl transition-shadow duration-300"
+                className=""
               >
-                {/* Header */}
-                <h2 className="text-lg font-bold text-blue-600 mb-3">
-                  {service.ServiceName}
-                </h2>
-
-                {/* Details */}
-                <div className="text-gray-700 space-y-2 mb-8">
-                  <p>
-                    <span className="font-semibold">Ride ID:</span>{" "}
-                    {service.RideId}
-                  </p>
-                  <p>
-                    <span className="font-semibold">Pickup:</span>{" "}
-                    {service.PickupLocation}
-                  </p>
-                  <p>
-                    <span className="font-semibold">Drop-off:</span>{" "}
-                    {service.DropLocation}
-                  </p>
-                  <p>
-                    <span className="font-semibold">Total Distance:</span>{" "}
-                    {service.TotalDistance} km
-                  </p>
-                  <p>
-                    <span className="font-semibold">Total Fare:</span>{" "}
-                    {service.TotalFareAmount} BDT
-                  </p>
-                  <p>
-                    <span className="font-semibold">Status:</span>{" "}
-                    {service.RideStatus}
-                  </p>
+                {/* Starter Plan */}
+                <div className="border hover:border-[#188784] rounded-md p-6">
+                  <h3 className="text-gray-800 text-xl font-semibold mb-2">{service.ServiceName}</h3>
                   <p className="text-sm text-gray-500">
-                    <span className="font-semibold">Created At:</span>{" "}
-                    {service.RideCreated_At}
-                  </p>
-                </div>
+                    <span className="font-semibold">Status:</span>{" "}
+                    {service.RideStatus}</p>
 
-                {/* Pay Button */}
-                <button
-                  onClick={() => handlePayment(service.RideId, service.TotalFareAmount)}
-                  className="absolute bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-md shadow-md transition-transform transform hover:scale-105"
-                >
-                  Pay
-                </button>
+                  <div className="mt-6">
+                    <h3 className="text-gray-800 md:text-2xl  font-semibold">
+                      {service.TotalFareAmount}৳ <sub className="text-gray-500 md:text-sm font-medium">Total Distance: {service.TotalDistance}km</sub>
+                    </h3>
+                  </div>
+
+                  <div className="mt-6">
+                    <h4 className="text-gray-800 md:text-xl font-semibold mb-2">Other Info</h4>
+                    <p className="text-sm text-gray-500"><span className="font-semibold">Ride ID:</span>{" "}
+                      {service.RideId}</p>
+
+                    <ul className="mt-6 space-y-4">
+                      <li className="flex items-center text-sm text-gray-500">
+                        <p>
+                          <span className="font-semibold">Pickup:</span>{" "}
+                          {service.PickupLocation}
+                        </p>
+                      </li>
+                      <li className="flex items-center text-sm text-gray-500">
+                        <p>
+                          <span className="font-semibold">Drop-off:</span>{" "}
+                          {service.DropLocation}
+                        </p>
+                      </li>
+                      <li className="flex items-center text-sm text-gray-500">
+                        <p className="text-sm text-gray-500">
+                          <span className="font-semibold">Created At:</span>{" "}
+                          {service.RideCreated_At}
+                        </p>
+                      </li>
+                    </ul>
+
+                    <button
+                      onClick={() => handlePayment(service.RideId, service.TotalFareAmount)}
+                      type="button"
+                      className=" w-full mt-4 bg-[#188784] text-white px-6 py-3 rounded-lg border border-solid border-[#178783] hover:bg-white hover:text-[#178783] transition "
+                    >
+                      Pay now
+                    </button>
+                  </div>
+                </div>
               </div>
             ))}
           </div>

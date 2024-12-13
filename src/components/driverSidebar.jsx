@@ -8,7 +8,7 @@ import { MdAssignmentAdd } from "react-icons/md";
 
 const Sidebar = () => {
   return (
-    <nav className="bg-[#178783] h-screen fixed top-0 right-0 min-w-[260px] py-6 px-4 flex flex-col overflow-auto">
+    <nav className="bg-[#178783] h-screen fixed top-0 right-0 min-w-[260px] py-6 px-4 flex flex-col overflow-auto z-40">
       {/* Profile Section */}
       <div className="flex flex-wrap flex-col justify-center items-center cursor-pointer">
         <p className="bg-gray-300 w-12 h-12 rounded-full flex items-center justify-center font-bold text-black text-xl">
