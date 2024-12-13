@@ -1,10 +1,11 @@
 import React, { useState, useRef, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import { AuthContext } from "../provider/AuthProvider";
 import Lottie from "lottie-react";
-import Trip from "../assets/lottie/trip.json"
-
+import Trip from "../assets/lottie/trip.json";
+import SentNotification from "./SentNotification";
+import Swal from "sweetalert2";
 
 const BookTrip = () => {
   const { UserId } = useContext(AuthContext);
@@ -129,7 +130,7 @@ const BookTrip = () => {
         .then((data) => {
           console.log(data);
           if (data.ServiceId) {
-            alert('go go go....')
+            console.log("create success");
           }
           //    form.reset();
         });
@@ -138,9 +139,20 @@ const BookTrip = () => {
     }
   };
 
+  const handleConfirmModal = () => {
+    setIsModalVisible(false);
+    Swal.fire({
+      title: "Success!",
+      text: "Your reservation has been success.",
+      icon: "success",
+    });
+    navigate("/all-service");
+  };
+
   return (
-<>
+    <>
       <Header />
+      <Link to={'/all-service'}><h1>View All</h1></Link>
       <div className="hero bg-gradient-to-t from-[#FFEDD2] to-[#DEFFDF] md:pt-10 pb-44">
         <div className="hero-content flex-row-reverse">
           <div className="w-1/2">
@@ -159,8 +171,12 @@ const BookTrip = () => {
       <div className="flex items-center justify-center p-6 mb-20 -mt-48">
         <div className="w-full bg-white rounded-xl shadow-lg p-6 max-w-7xl mx-auto">
           <div className="flex flex-col items-center mt-5">
-            <div className="w-[150px]"><Lottie animationData={Trip} /></div>
-            <h2 className="text-lg font-semibold text-center text-[#188784] mb-6">Book Your Trip</h2>
+            <div className="w-[150px]">
+              <Lottie animationData={Trip} />
+            </div>
+            <h2 className="text-lg font-semibold text-center text-[#188784] mb-6">
+              Book Your Trip
+            </h2>
           </div>
           <form onSubmit={handleSubmit}>
             {/* Pickup Location */}
@@ -175,7 +191,10 @@ const BookTrip = () => {
                     placeholder="Pickup Location"
                     value={startLocation.value}
                     onChange={(e) => {
-                      setStartLocation({ ...startLocation, value: e.target.value });
+                      setStartLocation({
+                        ...startLocation,
+                        value: e.target.value,
+                      });
                       fetchAutocomplete(e.target.value, "start");
                     }}
                     className="w-full text-sm text-gray-800 bg-gray-100 focus:bg-transparent px-4 py-3.5 rounded-md outline-[#178783]"
@@ -204,7 +223,10 @@ const BookTrip = () => {
                       placeholder="Destination Location"
                       value={endLocation.value}
                       onChange={(e) => {
-                        setEndLocation({ ...endLocation, value: e.target.value });
+                        setEndLocation({
+                          ...endLocation,
+                          value: e.target.value,
+                        });
                         fetchAutocomplete(e.target.value, "end");
                       }}
                       className="w-full text-sm text-gray-800 bg-gray-100 focus:bg-transparent px-4 py-3.5 rounded-md outline-[#178783]"
@@ -215,7 +237,9 @@ const BookTrip = () => {
                           <div
                             key={index}
                             className="p-2 cursor-pointer hover:bg-gray-100 autocomplete-item"
-                            onClick={() => handleAutocompleteSelect("end", location)}
+                            onClick={() =>
+                              handleAutocompleteSelect("end", location)
+                            }
                           >
                             {location.display_name}
                           </div>
@@ -230,7 +254,10 @@ const BookTrip = () => {
             {/* Additional Inputs */}
             <div className="grid md:grid-cols-2 gap-5">
               <div className="mb-4">
-                <label htmlFor="date" className="text-gray-800 text-[15px] mb-2 block">
+                <label
+                  htmlFor="date"
+                  className="text-gray-800 text-[15px] mb-2 block"
+                >
                   Date of Reservation:
                 </label>
                 <input
@@ -260,7 +287,9 @@ const BookTrip = () => {
             </div>
 
             <div className="mb-4">
-              <label className="text-gray-800 text-[15px] mb-2 block">Trip Type:</label>
+              <label className="text-gray-800 text-[15px] mb-2 block">
+                Trip Type:
+              </label>
               <div className="flex items-center">
                 <label className="flex items-center mr-3">
                   <input
@@ -285,7 +314,10 @@ const BookTrip = () => {
 
             <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
               <div className="mb-4">
-                <label htmlFor="pickupTime" className="text-gray-800 text-[15px] mb-2 block">
+                <label
+                  htmlFor="pickupTime"
+                  className="text-gray-800 text-[15px] mb-2 block"
+                >
                   Pickup Time:
                 </label>
                 <input
@@ -311,8 +343,6 @@ const BookTrip = () => {
                 </select>
               </div>
             </div>
-
-
 
             <div className="flex justify-center">
               <button
@@ -345,14 +375,16 @@ const BookTrip = () => {
                   minutes
                 </p>
                 <p className="mb-2">
-                  <strong>Amount:</strong> {amount} TK
+                  <strong>Amount:</strong> {amount.toFixed(1)} TK
                 </p>
                 <div className="flex justify-end mt-4">
                   <button
-                    onClick={() => setIsModalVisible(false)}
+                    onClick={handleConfirmModal}
+                    // onClick={handlePayNow}
                     className="bg-[#188784] text-white px-4 py-2 rounded-lg shadow-md hover:bg-[#166c6e] transition"
                   >
-                    Confirm
+                    Confirm{" "}
+                    <SentNotification serviceName="Reservation"></SentNotification>
                   </button>
                 </div>
               </div>

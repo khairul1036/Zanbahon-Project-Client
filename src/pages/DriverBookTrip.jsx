@@ -20,7 +20,7 @@ function DriverBookTrip() {
       )
         .then((res) => res.json())
         .then((data) => {
-          //   console.log(data);
+            // console.log(data);
           setRideRequests(data.data);
         })
         .catch((err) => console.log(err));
@@ -48,7 +48,10 @@ function DriverBookTrip() {
         `http://localhost/zanbahon-server/Service/getByPaymentAndStatus.php?status=${Accepted}&servicename=${ServiceName}`
       )
         .then((res) => res.json())
-        .then((data) => setRideHistory(data.data))
+        .then((data) => {
+          // console.log(data.data);
+          setRideHistory(data.data)
+        })
         .catch((err) => console.log(err));
     };
 
@@ -131,9 +134,9 @@ function DriverBookTrip() {
                           <IoLocationSharp className="text-gray-700 mr-2" />
                           Destination: {ride.DropLocation}
                         </p>
-                        <p className="text-sm text-gray-500">
+                        {/* <p className="text-sm text-gray-500">
                           Payment Status: {ride.PaymentStatus}
-                        </p>
+                        </p> */}
                       </div>
 
                       <div className="text-right">
@@ -202,9 +205,9 @@ function DriverBookTrip() {
                     <p className="mt-2 text-sm text-gray-500">
                       Status: {ride.RideStatus}
                     </p>
-                    <p className="text-sm text-gray-500">
+                    {/* <p className="text-sm text-gray-500">
                       Payment Status: {ride.PaymentStatus}
-                    </p>
+                    </p> */}
                   </div>
                 ))}
               </>

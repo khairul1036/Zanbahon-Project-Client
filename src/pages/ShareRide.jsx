@@ -204,7 +204,6 @@ const ShareRide = () => {
       <header className="z-20">
         <Header />
       </header>
-      <Link to={'/all-service'}><h1>View All</h1></Link>
       <div className="hero bg-gradient-to-t from-[#FFEDD2] to-[#DEFFDF] md:pt-10 pb-44">
         <div className="hero-content flex-row-reverse">
           <div className="w-1/2">
