@@ -210,7 +210,7 @@ const BookTrip = () => {
                       className="w-full text-sm text-gray-800 bg-gray-100 focus:bg-transparent px-4 py-3.5 rounded-md outline-[#178783]"
                     />
                     {autocompleteResults.end.length > 0 && (
-                      <div className="w-full bg-white border border-gray-300 rounded-md shadow-lg absolute z-10 w-60 autocomplete-box">
+                      <div className="bg-white border border-gray-300 rounded-md shadow-lg absolute z-10 w-60 autocomplete-box">
                         {autocompleteResults.end.map((location, index) => (
                           <div
                             key={index}
