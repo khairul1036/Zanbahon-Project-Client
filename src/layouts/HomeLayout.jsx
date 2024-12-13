@@ -5,6 +5,7 @@ import reserve from "../assets/researve.png";
 import Parking from "../assets/parking 1.png";
 import carRental from "../assets/car-rent 1.png";
 import emergency from "../assets/emergency.png";
+import addCar from "../assets/addcar.png";
 import more from "../assets/application 1.png";
 import { AuthContext } from "../provider/AuthProvider";
 import { Link } from "react-router-dom";
@@ -123,7 +124,7 @@ const HomeLayout = () => {
                 <div className="flex flex-col items-center p-6  rounded-lg border-gray-100 border-[2px] hover:border-[#178783] transition-all">
                   <div className="w-14 h-14 mb-2">
                     <img
-                      src={more}
+                      src={addCar}
                       alt="Add Vehicle"
                       className="object-contain w-full h-full"
                     />
