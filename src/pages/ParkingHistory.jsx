@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Header from "../components/Header";
+import { AuthContext } from "../provider/AuthProvider";
 
 const ParkingHistory = () => {
   const [parkingHistory, setParkingHistory] = useState([]);
   const [loading, setLoading] = useState(true);
-  const userId = 1; // Replace with actual logged-in user ID
+  const {UserId} = useContext(AuthContext)
 
   useEffect(() => {
     fetch(
-      `http://localhost/zanbahon-server/UserParking/getByParkingBookingByUser_Id.php?user_id=${userId}`
+      `http://localhost/zanbahon-server/UserParking/getByParkingBookingByUser_Id.php?user_id=${UserId}`
     )
       .then((response) => response.json())
       .then((data) => {
         if (data.data) {
+            console.log(data.data);
           setParkingHistory(data.data);
         }
         setLoading(false);
@@ -21,7 +23,7 @@ const ParkingHistory = () => {
         console.error("Error fetching parking history:", error);
         setLoading(false);
       });
-  }, [userId]);
+  }, [UserId]);
 
   const handlePayment = (bookingId) => {
     alert(`Proceeding to payment for Booking ID: ${bookingId}`);
@@ -36,52 +38,32 @@ const ParkingHistory = () => {
         {loading ? (
           <p className="text-center text-gray-500">Loading...</p>
         ) : parkingHistory.length > 0 ? (
-          <table className="min-w-full border border-gray-300">
-            <thead>
-              <tr className="bg-gray-200">
-                <th className="px-4 py-2 border">Booking ID</th>
-                <th className="px-4 py-2 border">Service Name</th>
-                <th className="px-4 py-2 border">Vehicle ID</th>
-                <th className="px-4 py-2 border">Parking ID</th>
-                <th className="px-4 py-2 border">Booking Time</th>
-                <th className="px-4 py-2 border">Payment Status</th>
-                <th className="px-4 py-2 border">Total Amount</th>
-                <th className="px-4 py-2 border">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {parkingHistory.map((booking) => (
-                <tr
-                  key={booking.ParkingBookingId}
-                  className="hover:bg-gray-100"
-                >
-                  <td className="px-4 py-2 border">
-                    {booking.ParkingBookingId}
-                  </td>
-                  <td className="px-4 py-2 border">{booking.ServiceName}</td>
-                  <td className="px-4 py-2 border">{booking.VehicleId}</td>
-                  <td className="px-4 py-2 border">{booking.ParkingId}</td>
-                  <td className="px-4 py-2 border">
-                    {new Date(booking.BookingTime).toLocaleString()}
-                  </td>
-                  <td className="px-4 py-2 border">{booking.PaymentStatus}</td>
-                  <td className="px-4 py-2 border">
-                    {booking.TotalAmount} BDT
-                  </td>
-                  <td className="px-4 py-2 border">
-                    {booking.PaymentStatus !== "Paid" && (
-                      <button
-                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
-                        onClick={() => handlePayment(booking.ParkingBookingId)}
-                      >
-                        Pay Now
-                      </button>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className="space-y-4">
+            {parkingHistory.map((booking) => (
+              <div
+                key={booking.ParkingBookingId}
+                className="border border-gray-300 rounded-lg shadow-md p-4"
+              >
+                <p className="text-lg font-semibold">
+                  Booking ID: {booking.ParkingBookingId}
+                </p>
+                <p>Service Name: {booking.ServiceName}</p>
+                <p>Vehicle ID: {booking.VehicleId}</p>
+                <p>Parking ID: {booking.ParkingId}</p>
+                <p>Booking Time: {new Date(booking.BookingTime).toLocaleString()}</p>
+                <p>Payment Status: {booking.PaymentStatus}</p>
+                <p>Total Amount: {booking.TotalAmount} BDT</p>
+                {booking.PaymentStatus !== "Paid" && (
+                  <button
+                    className="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
+                    onClick={() => handlePayment(booking.ParkingBookingId)}
+                  >
+                    Pay Now
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
         ) : (
           <p className="text-center text-gray-500">No parking history found.</p>
         )}

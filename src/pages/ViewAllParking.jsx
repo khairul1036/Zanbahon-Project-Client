@@ -7,11 +7,10 @@ const ViewAllParking = () => {
   const { UserId } = useContext(AuthContext);
   const [parkingData, setParkingData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [statusFilter, setStatusFilter] = useState("Available");
 
   useEffect(() => {
     fetch(
-      `http://localhost/zanbahon-server/DriverParking/getByParkingStatus.php?status=${statusFilter}`
+      `http://localhost/zanbahon-server/DriverParking/getByUser_Id.php?User_Id=${UserId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -22,7 +21,7 @@ const ViewAllParking = () => {
         console.error("Error fetching parking data:", error);
         setLoading(false);
       });
-  }, [statusFilter, UserId]);
+  }, [UserId]);
 
   const handleDelete = (parkingId) => {
     if (window.confirm("Are you sure you want to delete this parking?")) {
@@ -61,26 +60,6 @@ const ViewAllParking = () => {
           <Link to="/edit-parking" className="text-blue-500 underline">
             Edit Parking
           </Link>
-          <button
-            onClick={() => setStatusFilter("Available")}
-            className={`px-4 py-2 rounded ${
-              statusFilter === "Available"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200"
-            }`}
-          >
-            Show Available
-          </button>
-          <button
-            onClick={() => setStatusFilter("Occupied")}
-            className={`px-4 py-2 rounded ${
-              statusFilter === "Occupied"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200"
-            }`}
-          >
-            Show Occupied
-          </button>
         </div>
 
         {loading ? (

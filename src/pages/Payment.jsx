@@ -1,10 +1,12 @@
 import React, { useContext, useState } from "react";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const Payment = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { RideId, TotalFareAmount } = location.state || {};
   const { UserId } = useContext(AuthContext);
 
@@ -14,11 +16,14 @@ const Payment = () => {
   const [expiredMonth, setExpiredMonth] = useState("");
   const [expiredYear, setExpiredYear] = useState("");
   const [securityCode, setSecurityCode] = useState("");
-  const [cardSide, setCardSide] = useState("front");
   const [bkashNumber, setBkashNumber] = useState("");
   const [isTermsChecked, setIsTermsChecked] = useState(false);
 
-
+  const generateTransactionId = () => {
+    const timestamp = Date.now().toString(36); // Convert current timestamp to base 36
+    const randomString = Math.random().toString(36).substring(2, 10); // Generate a random alphanumeric string
+    return `TXN-${timestamp}-${randomString}`; // Format the TransactionId
+  };
 
   const formatCardNumber = (number) => {
     return number.replace(/\W/gi, "").replace(/(.{4})/g, "$1 ");
@@ -40,35 +45,46 @@ const Payment = () => {
 
   const handleCardSubmit = () => {
     alert(`Card Payment Successful\nCardholder: ${cardholder}`);
+    Swal.fire("Payment Successful", "Your payment has been processed.", "success").then(() => {
+      navigate("/");
+    });
   };
 
   const handleBkashSubmit = () => {
-    const paymentRideShare = {SenderId: UserId, Amount: TotalFareAmount, PaymentMethod: paymentMethod, TransactionId: RideId}
+    const paymentRideShare = {
+      SenderId: UserId,
+      Amount: TotalFareAmount,
+      PaymentMethod: paymentMethod,
+      TransactionId: generateTransactionId(),
+    };
 
-     console.log(paymentRideShare);
-
-     if (paymentRideShare) {
-       // store user details in database
-       fetch("http://localhost/zanbahon-server/payments.php", {
-         method: "POST",
-         headers: {
-           "content-type": "application/json",
-         },
-         body: JSON.stringify(paymentRideShare),
-       })
-         .then((res) => res.json())
-         .then((data) => {
-           console.log(data);
-           alert(`Bkash Payment Successful\nAccount: ${bkashNumber}`);
-        //    if(data.ServiceId){
-        //     document.getElementById("my_modal_5").close();
-        //     navigate('/all-service')
-        //    }
-        //    form.reset();
-         });
-     } else {
-       return;
-     }
+    if (paymentRideShare) {
+      // Store user details in the database
+      fetch("http://localhost/zanbahon-server/payments.php", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(paymentRideShare),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) {
+            Swal.fire("Payment Successful", "Your payment has been processed.", "success").then(() => {
+              navigate("/");
+            });
+          } else {
+            Swal.fire("Payment Failed", "There was an issue with your payment.", "error").then(() => {
+              navigate("/");
+            });
+          }
+        })
+        .catch((error) => {
+          Swal.fire("Error", "An unexpected error occurred.", "error").then(() => {
+            navigate("/");
+          });
+        });
+    }
   };
 
   return (
@@ -77,17 +93,13 @@ const Payment = () => {
         {/* Payment Method Switch */}
         <div className="flex justify-center gap-4 mb-6">
           <button
-            className={`px-4 py-2 rounded-full text-white ${
-              paymentMethod === "bkash" ? "bg-pink-600" : "bg-gray-400"
-            }`}
+            className={`px-4 py-2 rounded-full text-white ${paymentMethod === "bkash" ? "bg-pink-600" : "bg-gray-400"}`}
             onClick={() => setPaymentMethod("bkash")}
           >
             bKash Payment
           </button>
           <button
-            className={`px-4 py-2 rounded-full text-white ${
-              paymentMethod === "card" ? "bg-blue-600" : "bg-gray-400"
-            }`}
+            className={`px-4 py-2 rounded-full text-white ${paymentMethod === "card" ? "bg-blue-600" : "bg-gray-400"}`}
             onClick={() => setPaymentMethod("card")}
           >
             Card Payment
@@ -96,10 +108,7 @@ const Payment = () => {
 
         {/* Bkash Payment Form */}
         {paymentMethod === "bkash" && (
-          <div
-            id="bkash"
-            className="p-6 shadow-lg rounded-lg bg-pink-600 text-white"
-          >
+          <div id="bkash" className="p-6 shadow-lg rounded-lg bg-pink-600 text-white">
             <div className="text-center">
               <img
                 src="https://freelogopng.com/images/all_img/1656235654bkash-logo-white.png"
@@ -116,10 +125,9 @@ const Payment = () => {
                 <strong>Merchant ID:</strong> 21279615
               </p>
               <p className="flex items-center gap-2">
-                <strong>Amount:</strong>{" "}
+                <strong>Amount:</strong>
                 <span className="flex items-center gap-2 text-lg font-bold">
-                  {TotalFareAmount}{" "}
-                  <FaBangladeshiTakaSign className="text-lg font-bold" />
+                  {TotalFareAmount} <FaBangladeshiTakaSign className="text-lg font-bold" />
                 </span>
               </p>
             </div>
@@ -141,9 +149,7 @@ const Payment = () => {
               />
               <label htmlFor="terms" className="text-sm">
                 I agree to the{" "}
-                <span className="underline cursor-pointer">
-                  terms and conditions
-                </span>
+                <span className="underline cursor-pointer">terms and conditions</span>
               </label>
             </div>
             <div className="flex justify-between gap-4">
@@ -158,10 +164,7 @@ const Payment = () => {
               </button>
               <button
                 className="w-1/2 px-4 py-2 text-white rounded-full bg-gray-700 hover:bg-gray-800 focus:ring focus:ring-offset-2 focus:ring-gray-500"
-                onClick={() => {
-                  setBkashNumber("");
-                  setIsTermsChecked(false);
-                }}
+                onClick={() => navigate("/")}
               >
                 Close
               </button>
@@ -173,13 +176,11 @@ const Payment = () => {
         {/* Card Payment Form */}
         {paymentMethod === "card" && (
           <div className="p-4 shadow-lg rounded-lg bg-white">
-            <h2 className="text-xl font-semibold mb-4 text-center">
-              Card Payment
-            </h2>
+            <h2 className="text-xl font-semibold mb-4 text-center">Card Payment</h2>
             <div>
               <div className="mb-3 flex justify-center">
                 <div className="px-2">
-                  <label for="type1" class="flex items-center cursor-pointer">
+                  <label htmlFor="type1" className="flex items-center cursor-pointer">
                     <img
                       src="https://leadershipmemphis.org/wp-content/uploads/2020/08/780370.png"
                       className="h-8 ml-3"
@@ -203,9 +204,7 @@ const Payment = () => {
                 placeholder="Card number"
                 maxLength="19"
                 value={cardNumber}
-                onChange={(e) =>
-                  setCardNumber(formatCardNumber(e.target.value))
-                }
+                onChange={(e) => setCardNumber(formatCardNumber(e.target.value))}
               />
               <div className="grid grid-cols-2 gap-2 mb-3">
                 <select
@@ -217,10 +216,7 @@ const Payment = () => {
                     MM
                   </option>
                   {[...Array(12).keys()].map((month) => (
-                    <option
-                      key={month}
-                      value={String(month + 1).padStart(2, "0")}
-                    >
+                    <option key={month} value={String(month + 1).padStart(2, "0")}>
                       {String(month + 1).padStart(2, "0")}
                     </option>
                   ))}

@@ -39,7 +39,7 @@ const HomeLayout = () => {
         </div> */}
         <div className="">
           <div className="grid md:grid-cols-6 grid-cols-3 gap-6 p-6 max-w-screen-xl mx-auto">
-            <Link to={``}>
+            <Link to={`/bus-ticket`}>
               <div className="flex flex-col items-center">
                 <div className="w-14 h-14 mb-2">
                   <img

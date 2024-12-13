@@ -21,6 +21,7 @@ import CreateParking from "../pages/CreateParking";
 import ParkingOwner from "../pages/ParkingOwner";
 import ViewAllParking from "../pages/ViewAllParking";
 import ParkingHistory from "../pages/ParkingHistory";
+import BusTicketSeat from "../pages/BusTicketSeat";
 
 const router = createBrowserRouter([
   {
@@ -109,6 +110,10 @@ const router = createBrowserRouter([
   {
     path: "/history-parking",
     element: <PrivateRouter><ParkingHistory></ParkingHistory></PrivateRouter>,
+  },
+  {
+    path: "/bus-ticket",
+    element: <PrivateRouter><BusTicketSeat></BusTicketSeat></PrivateRouter>,
   },
 ]);
 

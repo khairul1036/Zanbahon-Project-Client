@@ -17,6 +17,7 @@ const Parking = () => {
             fetch("http://localhost/zanbahon-server/DriverParking/getByParkingStatus.php?status=Available")
                 .then((response) => response.json())
                 .then((data) => {
+                    console.log(data.data);
                     setParkingData(data.data);
                     setLoading(false);
                 })
@@ -48,6 +49,7 @@ const Parking = () => {
             user_id: UserId, // Replace with actual UserId from context
             vehicle_id: 2, // Replace with actual VehicleId (to be fetched or managed by user selection)
             parking_id: selectedParking.ParkingId,
+            ServiceProviderId: selectedParking.User_Id,
             parking_start_time: new Date().toISOString(),
             parking_end_time: new Date(Date.now() + 60 * 60 * 1000).toISOString(), // 1 hour later as an example
         };
