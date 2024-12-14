@@ -139,7 +139,7 @@ const Login = () => {
 
               <button
                 type="submit"
-                className="block w-full bg-[#13B3AE] mt-4 py-2 rounded-2xl text-white font-semibold mb-2"
+                className="w-full my-4 font-semibold border border-[#178783] text-[#178783] py-2 px-4 rounded-md hover:bg-[#178783] hover:text-white"
               >
                 Login
               </button>

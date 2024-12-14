@@ -7,7 +7,8 @@ import Header from "./Header";
 import Lottie from "lottie-react";
 import ambulance from "../assets/lottie/ambulance.json";
 import { AuthContext } from "../provider/AuthProvider";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const EmergencyServices = () => {
   const { dbUserRole } = useContext(AuthContext);
@@ -20,6 +21,7 @@ const EmergencyServices = () => {
   const [bloodCenters, setBloodCenters] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedBloodCenterId, setSelectedBloodCenterId] = useState(null);
+  const navigate = useNavigate()
 
   // Fetch Blood Donation Centers
   useEffect(() => {
@@ -70,7 +72,12 @@ const EmergencyServices = () => {
 
       if (data.message === "Blood request created successfully") {
         // Handle success (e.g., show success message, clear form, etc.)
-        alert("Blood request submitted successfully!");
+        Swal.fire({
+          title: "Request pending",
+          text: "You clicked the button!",
+          icon: "success"
+        });
+        navigate('/');
         setBloodRequest(false); // Close the blood request form
       } else {
         // Handle error

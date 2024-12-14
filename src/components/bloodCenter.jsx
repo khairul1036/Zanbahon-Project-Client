@@ -130,7 +130,7 @@ const BloodCenter = () => {
   };
 
   return (
-    <div>
+    <div className="mb-20">
       <header className="z-20">
         <Header />
       </header>

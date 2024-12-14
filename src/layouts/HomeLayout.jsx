@@ -22,7 +22,7 @@ const HomeLayout = () => {
       <div className="font-sans max-w-6xl max-md:max-w-md mx-auto">
         <div className="grid md:grid-cols-2 items-center md:gap-8 gap-6">
           <div className="max-md:order-1 max-md:text-center relative">
-            <h2 className="text-gray-800 lg:text-6xl md:text-5xl text-3xl font-extrabold mb-4 md:!leading-[56px]">
+            <h2 className="text-gray-800 px-5 lg:text-6xl md:text-5xl text-3xl font-extrabold mb-4 md:!leading-[56px]">
               <span className="text-[#178783]">Smart</span> Transport with{" "}
               <span className="text-[#178783]">Smart</span> People
             </h2>
